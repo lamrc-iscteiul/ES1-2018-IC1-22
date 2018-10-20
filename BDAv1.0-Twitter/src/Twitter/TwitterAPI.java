@@ -29,17 +29,13 @@ public class TwitterAPI {
 	
 	public static void printTimelineConsole(List<Status> statuses) {
 		System.out.println("------------------------\n Showing home timeline \n------------------------");
- 		int counter=0;
- 		int counterTotal = 0;
+ 		int counter=1;
         for (Status status : statuses) {
-				// Filters only tweets from user "catarina"
-				if (status.getUser().getName() != null && status.getUser().getName().contains("catarina")) {
-					System.out.println(status.getUser().getName() + ":" + status.getText());
-					counter++;
-				}
-				counterTotal++;
+			System.out.println("@"+ status.getUser().getName() + ": " + status.getText() + "\n" +
+							   "Retweets: " + status.getRetweetCount() + "         Favorites: " + status.getFavoriteCount() + "\n" +
+							   "---------------Tweet Nº " + counter + "---------------\n");	
+			counter++;
          }
- 		System.out.println("-------------\nNº of Results: " + counter+"/"+counterTotal);
 	}
 	
 	public static String getTimelineText(List<Status> statuses) {
