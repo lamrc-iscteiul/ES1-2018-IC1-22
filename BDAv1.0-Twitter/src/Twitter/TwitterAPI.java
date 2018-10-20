@@ -10,7 +10,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterAPI {
 
-	public static List getTimeline(String user) throws TwitterException {
+	public static List<Status> getTimeline(String user) throws TwitterException {
 		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
     	cb.setDebugEnabled(true)
