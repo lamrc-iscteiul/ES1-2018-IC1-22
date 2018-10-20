@@ -2,6 +2,7 @@ package Twitter;
 
 import java.util.List;
 
+import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -9,8 +10,12 @@ import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterAPI {
+	
+	private final int TWEET_NUMBER = 100;
 
 	public static List<Status> getTimeline(String user) throws TwitterException {
+		
+		Paging page = new Paging(1,100);
 		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
     	cb.setDebugEnabled(true)
@@ -22,7 +27,7 @@ public class TwitterAPI {
     	
     	Twitter twitter = tf.getInstance();
     	
-    	List<Status> statuses = twitter.getUserTimeline(user);
+    	List<Status> statuses = twitter.getUserTimeline(user, page);
     	
     	return statuses;
 	}
