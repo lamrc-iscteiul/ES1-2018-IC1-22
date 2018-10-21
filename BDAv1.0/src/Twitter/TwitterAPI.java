@@ -12,7 +12,12 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterAPI {
 	
 	private final int TWEET_NUMBER = 100;
-
+	
+	/** Gets a user's tweets
+	 * 
+	 * @param user Desired user's usernam
+	 * @returns List of the user's statuses
+	 */
 	public static List<Status> getTimeline(String user) throws TwitterException {
 		
 		Paging page = new Paging(1,100);
@@ -32,6 +37,10 @@ public class TwitterAPI {
     	return statuses;
 	}
 	
+	/** Prints a list of tweets on the console
+	 * 
+	 * @param statuses The list of statuses to print
+	 */
 	public static void printTimelineConsole(List<Status> statuses) {
 		System.out.println("------------------------\n Showing home timeline \n------------------------");
  		int counter=1;
@@ -43,6 +52,11 @@ public class TwitterAPI {
          }
 	}
 	
+	/**Gets tweets in a String
+	 * 
+	 * @param statuses The list of statuses to get as strings
+	 * @returns The tweets printed in a String
+	 */
 	public static String getTimelineText(List<Status> statuses) {
 		String result = "";
 		result += "------------------------\n Showing user's timeline \n------------------------" + "\n";
@@ -56,6 +70,11 @@ public class TwitterAPI {
         return result;
 	}
 	
+	/**Gets a tweet as a String
+	 * 
+	 * @param status Tweet to print
+	 * @return Tweet as a String
+	 */
 	public static String getTweet(Status status) {
 		String result = "";
 		result += "@"+ status.getUser().getName() + ": " + status.getText() + "\n" +
