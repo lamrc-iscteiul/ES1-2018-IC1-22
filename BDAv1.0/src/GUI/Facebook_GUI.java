@@ -48,12 +48,12 @@ public class Facebook_GUI  {
 		panel.setOpaque(false);
 		panel.setLayout(new GridLayout(0,1, 0, 0));
 		 Button = new JButton("LOGIN-Facebook");
-		// Button.setOpaque(false);
-		 //Button.setBorderPainted(false);
-	   	 //Button.setContentAreaFilled(false);
-	   	 //Button.setFocusPainted(false);
-		 //Button.setIcon(new ImageIcon("C:\\Users\\Lu\u00EDs\\Documents\\ES\\isThisTheRealLife\\imageedit_1_4496880657.png"));
-		 //Image background = Toolkit.getDefaultToolkit().createImage("C:\\Users\\Lu\u00EDs\\Documents\\ES\\isThisTheRealLife-checkboxother\\background-teste1.jpg");
+		 Button.setOpaque(false);
+		 Button.setBorderPainted(false);
+	   	 Button.setContentAreaFilled(false);
+	   	 Button.setFocusPainted(false);
+		 Button.setIcon(new ImageIcon("Images/44395310_435854026944261_102051377890459648_n.png"));
+		 Image background = Toolkit.getDefaultToolkit().createImage("C:\\Users\\Lu\u00EDs\\Documents\\ES\\isThisTheRealLife-checkboxother\\background-teste1.jpg");
 		
 		 panel.add(Button);
 		 Button.addActionListener(new ActionListener() {

@@ -93,7 +93,7 @@ import java.awt.Toolkit;
 		frame = new JFrame();
 		frame.setBounds(0, 0, 800,735);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setContentPane(new JLabel(new ImageIcon("C:\\Users\\Lu\u00EDs\\Documents\\ES\\isThisTheRealLife-checkboxother\\background-teste3.jpg")));
+		frame.setContentPane(new JLabel(new ImageIcon("Images/44445352_244735456205143_5607783552499318784_n.jpg")));
 		
 		//Data
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");

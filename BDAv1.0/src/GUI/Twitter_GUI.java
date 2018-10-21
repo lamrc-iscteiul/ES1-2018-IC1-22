@@ -34,11 +34,11 @@ public class Twitter_GUI  {
 		panel.setOpaque(false);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		JButton Button = new JButton("LOGIN-Twitter");
-		//Button.setOpaque(false);
-		 //Button.setBorderPainted(false);
-	   	 //Button.setContentAreaFilled(false);
-	   	 //Button.setFocusPainted(false);
-		//Button.setIcon(new ImageIcon("C:\\Users\\Lu\u00EDs\\Documents\\ES\\isThisTheRealLife\\Twitter button.png"));
+		Button.setOpaque(false);
+		Button.setBorderPainted(false);
+	   	Button.setContentAreaFilled(false);
+	   	Button.setFocusPainted(false);
+		Button.setIcon(new ImageIcon("Images/44439062_198449901053950_8957082900566638592_n.png"));
 		
 		panel.add(Button);
 		
