@@ -146,7 +146,7 @@ import java.awt.Toolkit;
 		 
 		 chckbxFacebook.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					panel_3.removeAll();
+					//panel_3.removeAll();
 					if (chckbxFacebook.isSelected()){
 						System.out.println("hei");
 						panel_3.add(face.getPanel());
@@ -154,19 +154,19 @@ import java.awt.Toolkit;
 					}
 					
 					else {
-						
+						panel_3.remove(face.getPanel());
 					}
 					scroll.updateUI();
 				}
 			});
 			chckbxTwitter.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					panel_3.removeAll();
+					//panel_3.removeAll();
 					if (chckbxTwitter.isSelected()){
 					panel_3.add(tweet.getPanel());
 					}
 					else {
-						
+						panel_3.remove(tweet.getPanel());
 					}
 					scroll.updateUI();
 				}
