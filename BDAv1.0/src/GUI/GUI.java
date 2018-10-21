@@ -61,7 +61,7 @@ import java.awt.Toolkit;
  	private Twitter_GUI tweet;
  	//private Component []  informacao;
  	/**
-	 * Launch the application.
+	 * Lança a aplicação.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -77,13 +77,13 @@ import java.awt.Toolkit;
 		});
 	}
  	/**
-	 * Create the application.
+	 * Cria a aplicação.
 	 */
 	public GUI() {
 		initialize();
 		construct();
 	}
- 	/**
+	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
@@ -183,9 +183,18 @@ import java.awt.Toolkit;
 
 		
 	}
+	/**
+	 * Função retorna um painel
+	 * @return JPanel que representa um painel
+	 */
 	public JPanel getPanel() {
 		return panel_3;
 	}
+	
+	/**
+	 * Função define um painel JPanel
+	 * @param panel_3 JPanel que representa um painel
+	 */
 	public void setPanel(JPanel panel_3) {
 		this.panel_3 = panel_3;
 	}

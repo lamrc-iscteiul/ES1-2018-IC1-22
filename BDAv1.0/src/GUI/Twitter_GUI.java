@@ -16,19 +16,27 @@ import javax.swing.JTextArea;
 import Twitter.TwitterAPI;
 import twitter4j.Status;
 import twitter4j.TwitterException;
-
+/**
+ * Representa o GUI que diz respeito ao Twitter.
+ * @author Adil, João
+ * @version 1.0
+ */
 public class Twitter_GUI  {
 	private JPanel panel;
 	private JTextArea feed;
 	private JFrame frame;
 	
 	//private Component[] informacaoTweet;
-	
+	/**
+	 * Inicializa o GUI do Twitter.
+	 */
 	public Twitter_GUI() {
 		Adiciona();
 	}
 
-
+/**
+ * Adiciona ao painel os componentes necessários (botões, imagens, etc...).
+ */
 	private void Adiciona(){
 		panel = new JPanel();
 		panel.setOpaque(false);
@@ -77,12 +85,18 @@ public class Twitter_GUI  {
 		
 	}
 
-
+/**
+ * Obtem um painel do tipo JPanel.
+ * @return um painel to tipo JPanel
+ */
 	public JPanel getPanel() {
 		return panel;
 	}
 
-
+/**
+ * Define um painel do tipo JPanel.
+ * @param panel um painel do tipo JPanel
+ */
 	public void setPanel(JPanel panel) {
 		this.panel = panel;
 	}
