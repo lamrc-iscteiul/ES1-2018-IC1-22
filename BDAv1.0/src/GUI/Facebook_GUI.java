@@ -34,7 +34,7 @@ import java.awt.Toolkit;
 
 /**
  * Representa o GUI que diz respeito ao Facebook.
- * @author Adil, João
+ * @author Adil, Luis
  * @version 1.0
  */
 public class Facebook_GUI  {

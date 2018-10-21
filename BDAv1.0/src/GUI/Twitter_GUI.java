@@ -18,7 +18,7 @@ import twitter4j.Status;
 import twitter4j.TwitterException;
 /**
  * Representa o GUI que diz respeito ao Twitter.
- * @author Adil, João
+ * @author Adil, Luis
  * @version 1.0
  */
 public class Twitter_GUI  {
