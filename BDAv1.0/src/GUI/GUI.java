@@ -93,7 +93,7 @@ import java.awt.Toolkit;
 		frame = new JFrame();
 		frame.setBounds(0, 0, 800,735);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setContentPane(new JLabel(new ImageIcon("Images/background-teste3.jpg")));
+		frame.setContentPane(new JLabel(new ImageIcon("Images/background-teste4.jpg")));
 		
 		//Data
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");

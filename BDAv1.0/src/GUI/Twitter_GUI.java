@@ -1,4 +1,5 @@
 package GUI;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -41,22 +42,17 @@ public class Twitter_GUI  {
 		panel = new JPanel();
 		panel.setOpaque(false);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
-		JButton Button = new JButton("LOGIN-Twitter");
+		JButton Button = new JButton("");
 		Button.setOpaque(false);
 		Button.setBorderPainted(false);
 	   	Button.setContentAreaFilled(false);
 	   	Button.setFocusPainted(false);
 		Button.setIcon(new ImageIcon("Images/Twitter button.png"));
-		
 		panel.add(Button);
 		
-		
-		
-		
-		Button.addActionListener(new ActionListener() {
+		Button.addActionListener(new ActionListener() {	
 			public void actionPerformed(ActionEvent arg0) {
-				List<Status> status_iscte = null;
-				
+				List<Status> status_iscte = null;				
 				feed = new JTextArea ( 80,2);
 				JScrollPane scrollArea = new JScrollPane(feed);
 				try {
@@ -71,13 +67,14 @@ public class Twitter_GUI  {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				frame = new JFrame();
-				frame.setBounds(0, 0, 800,735);
 				feed.append(TwitterAPI.getTimelineText(status_iscte));
-				JScrollPane scroll = new JScrollPane(feed);
-				frame.add(scroll);
-				frame.setVisible(true);
+				feed.setForeground(Color.WHITE);
+				feed.setBackground(new Color(0,0,0,115));
+				JScrollPane scroll = new JScrollPane(feed);			
+				scroll.getViewport().setOpaque(false);
+	            scroll.setOpaque(false);
+				panel.removeAll();			
+				panel.add(scroll);
 			}
 		});
 		}

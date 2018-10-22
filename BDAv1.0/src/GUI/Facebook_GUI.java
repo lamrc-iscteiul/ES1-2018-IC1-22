@@ -56,7 +56,7 @@ public class Facebook_GUI  {
 		panel = new JPanel();
 		panel.setOpaque(false);
 		panel.setLayout(new GridLayout(0,1, 0, 0));
-		 Button = new JButton("LOGIN-Facebook");
+		 Button = new JButton("");
 		 Button.setOpaque(false);
 		 Button.setBorderPainted(false);
 	   	 Button.setContentAreaFilled(false);
