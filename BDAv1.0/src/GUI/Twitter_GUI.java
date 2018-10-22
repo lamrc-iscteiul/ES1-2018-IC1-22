@@ -46,7 +46,7 @@ public class Twitter_GUI  {
 		Button.setBorderPainted(false);
 	   	Button.setContentAreaFilled(false);
 	   	Button.setFocusPainted(false);
-		Button.setIcon(new ImageIcon("Images/44439062_198449901053950_8957082900566638592_n.png"));
+		Button.setIcon(new ImageIcon("Images/Twitter button.png"));
 		
 		panel.add(Button);
 		

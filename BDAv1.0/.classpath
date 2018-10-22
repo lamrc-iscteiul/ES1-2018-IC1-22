@@ -2,11 +2,11 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/ASUS/Downloads/restfb-2.11.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ASUS/Downloads/twitter4j-4.0.7.zip"/>
-	<classpathentry kind="lib" path="C:/Users/ASUS/Downloads/twitter4j-4.0.7/lib/twitter4j-async-4.0.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ASUS/Downloads/twitter4j-4.0.7/lib/twitter4j-core-4.0.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ASUS/Downloads/twitter4j-4.0.7/lib/twitter4j-examples-4.0.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ASUS/Downloads/twitter4j-4.0.7/lib/twitter4j-stream-4.0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Luís/Documents/ES/bibliotecaTwitter/restfb-2.11.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Luís/Documents/ES/bibliotecaTwitter/twitter4j-async-4.0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Luís/Documents/ES/bibliotecaTwitter/twitter4j-core-4.0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Luís/Documents/ES/bibliotecaTwitter/twitter4j-examples-4.0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Luís/Documents/ES/bibliotecaTwitter/twitter4j-stream-4.0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Luís/Downloads/twitter4j-4.0.7.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
