@@ -146,9 +146,7 @@ import java.awt.Toolkit;
 		 
 		 chckbxFacebook.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					//panel_3.removeAll();
 					if (chckbxFacebook.isSelected()){
-						System.out.println("hei");
 						panel_3.add(face.getPanel());
 						
 					}
@@ -161,7 +159,6 @@ import java.awt.Toolkit;
 			});
 			chckbxTwitter.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					//panel_3.removeAll();
 					if (chckbxTwitter.isSelected()){
 					panel_3.add(tweet.getPanel());
 					}
@@ -198,25 +195,4 @@ import java.awt.Toolkit;
 	public void setPanel(JPanel panel_3) {
 		this.panel_3 = panel_3;
 	}
-	/*private Component createContent() {
-		 Image background = Toolkit.getDefaultToolkit().createImage("C:\\Users\\Lu\u00EDs\\Documents\\ES\\isThisTheRealLife-checkboxother\\background-teste1.jpg");
-	        JPanel panel = new JPanel() {
-	            @Override
-	            protected void paintComponent(Graphics g) {
-	                super.paintComponent(g);
-	                g.drawImage(background, 0, 0, null);
-	            }
-	        };
-
-	        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-	        
-	            scroll.setAlignmentX(Component.CENTER_ALIGNMENT);
-	            
-	            panel.add(scroll);
-	        panel.setOpaque(false);
-	        panel.setBackground(new Color(0,0,0,0));
-			return panel;
-	 }
-	*/
-	
 }

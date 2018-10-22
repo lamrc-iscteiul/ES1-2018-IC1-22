@@ -67,7 +67,6 @@ public class Facebook_GUI  {
 		 panel.add(Button);
 		 Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			System.out.println("woeruwoe");	
 			}
 		});
 		//informacaoFace= new Component[] ;

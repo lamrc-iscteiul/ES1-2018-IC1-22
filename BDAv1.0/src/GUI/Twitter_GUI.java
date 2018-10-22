@@ -52,34 +52,38 @@ public class Twitter_GUI  {
 		
 		Button.addActionListener(new ActionListener() {	
 			public void actionPerformed(ActionEvent arg0) {
-				List<Status> status_iscte = null;				
-				feed = new JTextArea ( 80,2);
-				JScrollPane scrollArea = new JScrollPane(feed);
-				try {
-					status_iscte = TwitterAPI.getTimeline("ISCTEIUL");
-				} catch (TwitterException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				try {
-					List<Status> status_biblio = TwitterAPI.getTimeline("BibliotecaISCTE");
-				} catch (TwitterException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				feed.append(TwitterAPI.getTimelineText(status_iscte));
-				feed.setForeground(Color.WHITE);
-				feed.setBackground(new Color(0,0,0,115));
-				JScrollPane scroll = new JScrollPane(feed);			
-				scroll.getViewport().setOpaque(false);
-	            scroll.setOpaque(false);
-				panel.removeAll();			
-				panel.add(scroll);
+				feed();
 			}
 		});
 		}
+	
+	/**
+	 * Função que atualiza o painel, depois do login, para que o feed apareça.
+	 */
 	private void feed(){
-		
+		List<Status> status_iscte = null;				
+		feed = new JTextArea ( 80,2);
+		JScrollPane scrollArea = new JScrollPane(feed);
+		try {
+			status_iscte = TwitterAPI.getTimeline("ISCTEIUL");
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			List<Status> status_biblio = TwitterAPI.getTimeline("BibliotecaISCTE");
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		feed.append(TwitterAPI.getTimelineText(status_iscte));
+		feed.setForeground(Color.WHITE);
+		feed.setBackground(new Color(0,0,0,115));
+		JScrollPane scroll = new JScrollPane(feed);			
+		scroll.getViewport().setOpaque(false);
+        scroll.setOpaque(false);
+		panel.removeAll();			
+		panel.add(scroll);
 	}
 
 /**
