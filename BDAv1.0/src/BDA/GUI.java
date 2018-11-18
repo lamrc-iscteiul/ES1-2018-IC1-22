@@ -61,7 +61,7 @@ import java.awt.Toolkit;
  	private Twitter_GUI tweet;
  	//private Component []  informacao;
  	/**
-	 * Launch the application.
+	 * Lança a aplicação.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -77,13 +77,13 @@ import java.awt.Toolkit;
 		});
 	}
  	/**
-	 * Create the application.
+	 * Cria a aplicação.
 	 */
 	public GUI() {
 		initialize();
 		construct();
 	}
- 	/**
+	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
@@ -93,7 +93,7 @@ import java.awt.Toolkit;
 		frame = new JFrame();
 		frame.setBounds(0, 0, 800,735);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setContentPane(new JLabel(new ImageIcon("C:\\Users\\Lu\u00EDs\\Documents\\ES\\isThisTheRealLife-checkboxother\\background-teste3.jpg")));
+		frame.setContentPane(new JLabel(new ImageIcon("Images/background-teste4.jpg")));
 		
 		//Data
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -146,27 +146,24 @@ import java.awt.Toolkit;
 		 
 		 chckbxFacebook.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					panel_3.removeAll();
 					if (chckbxFacebook.isSelected()){
-						System.out.println("hei");
 						panel_3.add(face.getPanel());
 						
 					}
 					
 					else {
-						
+						panel_3.remove(face.getPanel());
 					}
 					scroll.updateUI();
 				}
 			});
 			chckbxTwitter.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					panel_3.removeAll();
 					if (chckbxTwitter.isSelected()){
 					panel_3.add(tweet.getPanel());
 					}
 					else {
-						
+						panel_3.remove(tweet.getPanel());
 					}
 					scroll.updateUI();
 				}
@@ -183,31 +180,19 @@ import java.awt.Toolkit;
 
 		
 	}
+	/**
+	 * Função retorna um painel
+	 * @return JPanel que representa um painel
+	 */
 	public JPanel getPanel() {
 		return panel_3;
 	}
+	
+	/**
+	 * Função define um painel JPanel
+	 * @param panel_3 JPanel que representa um painel
+	 */
 	public void setPanel(JPanel panel_3) {
 		this.panel_3 = panel_3;
 	}
-	/*private Component createContent() {
-		 Image background = Toolkit.getDefaultToolkit().createImage("C:\\Users\\Lu\u00EDs\\Documents\\ES\\isThisTheRealLife-checkboxother\\background-teste1.jpg");
-	        JPanel panel = new JPanel() {
-	            @Override
-	            protected void paintComponent(Graphics g) {
-	                super.paintComponent(g);
-	                g.drawImage(background, 0, 0, null);
-	            }
-	        };
-
-	        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-	        
-	            scroll.setAlignmentX(Component.CENTER_ALIGNMENT);
-	            
-	            panel.add(scroll);
-	        panel.setOpaque(false);
-	        panel.setBackground(new Color(0,0,0,0));
-			return panel;
-	 }
-	*/
-	
 }

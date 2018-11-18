@@ -32,17 +32,26 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 
-
+/**
+ * Representa o GUI que diz respeito ao Facebook.
+ * @author Adil, Luis
+ * @version 1.0
+ */
 public class Facebook_GUI  {
 	private JPanel panel;
 	private JButton Button;
 	//private Component[] informacaoFace;
 	
+	/**
+	 * Inicializa o GUI do Twitter.
+	 */
 	public Facebook_GUI() {
 		Adiciona();
 	}
 
-
+	/**
+	 * Adiciona ao painel os componentes necessários (botões, imagens, etc...).
+	 */
 	private void Adiciona(){
 		panel = new JPanel();
 		panel.setOpaque(false);
@@ -52,29 +61,36 @@ public class Facebook_GUI  {
 		 Button.setBorderPainted(false);
 	   	 Button.setContentAreaFilled(false);
 	   	 Button.setFocusPainted(false);
-		 Button.setIcon(new ImageIcon("C:\\Users\\Lu\u00EDs\\Documents\\ES\\isThisTheRealLife\\imageedit_1_4496880657.png"));
-		 Image background = Toolkit.getDefaultToolkit().createImage("C:\\Users\\Lu\u00EDs\\Documents\\ES\\isThisTheRealLife-checkboxother\\background-teste1.jpg");
+		 Button.setIcon(new ImageIcon("Images/imageedit_1_4496880657.png"));
+		 //Image background = Toolkit.getDefaultToolkit().createImage("C:\\Users\\Lu\u00EDs\\Documents\\ES\\isThisTheRealLife-checkboxother\\background-teste1.jpg");
 		
 		 panel.add(Button);
 		 Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			System.out.println("woeruwoe");	
 			}
 		});
 		//informacaoFace= new Component[] ;
 		}
 	
-	
+	/**
+	 * EMPTY
+	 */
 	private void feed(){
 		
 	}
 
-
+	/**
+	 * Obtem um painel do tipo JPanel.
+	 * @return um painel to tipo JPanel
+	 */
 	public JPanel getPanel() {
 		return panel;
 	}
 
-
+	/**
+	 * Define um painel do tipo JPanel.
+	 * @param panel um painel do tipo JPanel
+	 */
 	public void setPanel(JPanel panel) {
 		this.panel = panel;
 	}
