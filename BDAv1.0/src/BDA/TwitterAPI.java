@@ -1,5 +1,6 @@
-package Twitter;
+package BDA;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import twitter4j.Paging;
@@ -12,7 +13,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterAPI {
 	
 	private final int TWEET_NUMBER = 100;
-	
+	private static ArrayList<String> pesquisa= new ArrayList<String>(); 
 	/** Gets a user's tweets
 	 * 
 	 * @param user Desired user's usernam
@@ -62,11 +63,13 @@ public class TwitterAPI {
 		result += "------------------------\n Showing user's timeline \n------------------------" + "\n";
  		int counter=1;
         for (Status status : statuses) {
+        	pesquisa.add(getTweet(status));
         	result += "@"+ status.getUser().getName() + ": " + status.getText() + "\n" +
         			  "Retweets: " + status.getRetweetCount() + "         Favorites: " + status.getFavoriteCount() + "\n" +
         			  "---------------Tweet Nº " + counter + "---------------\n";
         	counter++;
         }
+        System.out.println(getPesquisa());
         return result;
 	}
 	
@@ -75,8 +78,14 @@ public class TwitterAPI {
 	 * @param status Tweet to print
 	 * @return Tweet as a String
 	 */
+	public static ArrayList<String> getPesquisa(){
+		return pesquisa;
+			
+	}
+	
 	public static String getTweet(Status status) {
 		String result = "";
+		
 		result += "@"+ status.getUser().getName() + ": " + status.getText() + "\n" +
   			  "Retweets: " + status.getRetweetCount() + "         Favorites: " + status.getFavoriteCount();
 		return result;
