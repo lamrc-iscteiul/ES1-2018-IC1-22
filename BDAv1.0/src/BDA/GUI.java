@@ -1,4 +1,4 @@
-package GUI;
+package BDA;
 import java.awt.EventQueue;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -127,8 +127,26 @@ import java.awt.Toolkit;
 	          chckbxEmail.setSelected(true);
 	          JPanel panel_1= new JPanel();
 	          panel_1.setOpaque(false);
-	      
 	          
+	          JTextField text=new JTextField();
+	          text.setMinimumSize(new Dimension(100,200));
+	          frame.getContentPane().add(text, BorderLayout.NORTH);
+	          
+	          JButton search= new JButton("SEARCH");
+	          search.addActionListener(new ActionListener() {
+	          
+	        	  
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					tweet.search(text.getText());
+					System.out.println(tweet.getPesquisa());
+					
+				}
+	        	  
+	          });
+	          
+	          
+	   frame.getContentPane().add(search, BorderLayout.EAST);
 	           panel_3 = new JPanel();
 	             panel_3.setOpaque(false);
 	           panel_3.setLayout(new GridLayout(2, 0,0 , 2));
