@@ -105,8 +105,28 @@ public class EmailAPI {
          }
     }
     
-    public ArrayList<GeneralMessage> getList() {
+    private ArrayList<GeneralMessage> getMessages() {
     	return messages;
+    }
+    
+    public static ArrayList<GeneralMessage> getList() {
+    	EmailAPI mail;
+    	ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
+		try {
+			mail = new EmailAPI();
+	        mail.setUserPass("jmmpa111@iscte-iul.pt", "Piroquita123");
+	        mail.connect();
+	        mail.openFolder("INBOX");
+	        mail.transformMessageToList();
+	        list = mail.getMessages();
+	        mail.disconnect();
+	        mail.finalize();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+		return list;
     }
 
     public void closeFolder()
@@ -152,8 +172,6 @@ public class EmailAPI {
             System.out.println("Text: " + message.getContent().toString());
         }
     }
-
-
 
     public static int saveFile(File saveFile, Part part) throws Exception {
 

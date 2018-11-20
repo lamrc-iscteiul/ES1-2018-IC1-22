@@ -12,16 +12,40 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterAPI {
 	
-	private final int TWEET_NUMBER = 100;
-	private static ArrayList<String> pesquisa= new ArrayList<String>(); 
+	private final static int TWEET_NUMBER = 100;
+	
+	/**Gets the List containing objects of the type GeneralMessage
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public static ArrayList<GeneralMessage> getList(String user) {
+		ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
+		try {
+			List<Status> statuses = getTimeline(user);
+			for(Status status : statuses) {
+				GeneralMessage msg = new GeneralMessage();
+				msg.setBody(status.getText());
+				msg.setSource("@" + status.getUser().getName());
+				msg.setSubject("");
+				msg.setType(GeneralMessage.TWITTER);
+				list.add(msg);
+			}
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	/** Gets a user's tweets
 	 * 
 	 * @param user Desired user's usernam
 	 * @returns List of the user's statuses
 	 */
-	public static List<Status> getTimeline(String user) throws TwitterException {
+	private static List<Status> getTimeline(String user) throws TwitterException {
 		
-		Paging page = new Paging(1,100);
+		Paging page = new Paging(1,TWEET_NUMBER);
 		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
     	cb.setDebugEnabled(true)
@@ -63,7 +87,7 @@ public class TwitterAPI {
 		result += "------------------------\n Showing user's timeline \n------------------------" + "\n";
  		int counter=1;
         for (Status status : statuses) {
-        	pesquisa.add(getTweet(status));
+//        	pesquisa.add(getTweet(status));
         	result += "@"+ status.getUser().getName() + ": " + status.getText() + "\n" +
         			  "Retweets: " + status.getRetweetCount() + "         Favorites: " + status.getFavoriteCount() + "\n" +
         			  "---------------Tweet Nº " + counter + "---------------\n";
@@ -78,11 +102,6 @@ public class TwitterAPI {
 	 * @param status Tweet to print
 	 * @return Tweet as a String
 	 */
-	public static ArrayList<String> getPesquisa(){
-		return pesquisa;
-			
-	}
-	
 	public static String getTweet(Status status) {
 		String result = "";
 		
