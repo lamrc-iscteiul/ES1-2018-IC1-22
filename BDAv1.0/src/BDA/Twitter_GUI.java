@@ -61,19 +61,25 @@ public class Twitter_GUI  {
 	/**
 	 * Função que mostra os resultados da pesquisa feita pelo utilizador
 	 */
-	private void search(String s){
+	void search(String s){
 		for(String x: TwitterAPI.getPesquisa()){
 			String[] aux= x.split(" ");
+		
 			for (int i=0;i!=aux.length;i++)
 				if(aux[i].equals(s))
 					pesquisa.add(x);
 				}		
 	}
 	
+	public void setPesquisa(ArrayList<String> pesquisa) {
+		this.pesquisa = pesquisa;
+	}
+
 	/**
 	 * Função que atualiza o painel, depois do login, para que o feed apareça.
 	 */
 	private void feed(){
+		
 		pesquisa.clear();
 		List<Status> status_iscte = null;				
 		feed = new JTextArea ( 80,2);
@@ -92,6 +98,7 @@ public class Twitter_GUI  {
 		}
 		
 		feed.append(TwitterAPI.getTimelineText(status_iscte));
+		
 		feed.setForeground(Color.WHITE);
 		feed.setBackground(new Color(0,0,0,115));
 		JScrollPane scroll = new JScrollPane(feed);			

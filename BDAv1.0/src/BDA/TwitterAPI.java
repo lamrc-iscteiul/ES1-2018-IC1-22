@@ -69,7 +69,7 @@ public class TwitterAPI {
         			  "---------------Tweet Nº " + counter + "---------------\n";
         	counter++;
         }
-        System.out.println(getPesquisa());
+        
         return result;
 	}
 	
