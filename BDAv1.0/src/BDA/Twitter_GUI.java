@@ -1,4 +1,5 @@
 package BDA;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
@@ -37,7 +38,7 @@ public class Twitter_GUI  {
 	}
 
 /**
- * Adiciona ao painel os componentes necess·rios (botıes, imagens, etc...).
+ * Adiciona ao painel os componentes necess√°rios (bot√µes, imagens, etc...).
  */
 	private void Adiciona(){
 		panel = new JPanel();
@@ -59,7 +60,7 @@ public class Twitter_GUI  {
 		}
 	
 	/**
-	 * FunÁ„o que mostra os resultados da pesquisa feita pelo utilizador
+	 * Fun√ß√£o que mostra os resultados da pesquisa feita pelo utilizador
 	 */
 	void search(String s){
 		for(String x: TwitterAPI.getPesquisa()){
@@ -76,7 +77,7 @@ public class Twitter_GUI  {
 	}
 
 	/**
-	 * FunÁ„o que atualiza o painel, depois do login, para que o feed apareÁa.
+	 * Fun√ß√£o que atualiza o painel, depois do login, para que o feed apare√ßa.
 	 */
 	private void feed(){
 		
