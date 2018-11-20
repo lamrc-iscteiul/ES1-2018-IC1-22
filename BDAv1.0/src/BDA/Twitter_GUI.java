@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -26,6 +27,7 @@ public class Twitter_GUI  {
 	private JPanel panel;
 	private JTextArea feed;
 	private JFrame frame;
+	private ArrayList<String> pesquisa= new ArrayList<String>(); 
 	
 	//private Component[] informacaoTweet;
 	/**
@@ -36,7 +38,7 @@ public class Twitter_GUI  {
 	}
 
 /**
- * Adiciona ao painel os componentes necess·rios (botıes, imagens, etc...).
+ * Adiciona ao painel os componentes necess√°rios (bot√µes, imagens, etc...).
  */
 	private void Adiciona(){
 		panel = new JPanel();
@@ -58,9 +60,28 @@ public class Twitter_GUI  {
 		}
 	
 	/**
-	 * FunÁ„o que atualiza o painel, depois do login, para que o feed apareÁa.
+	 * Fun√ß√£o que mostra os resultados da pesquisa feita pelo utilizador
+	 */
+	void search(String s){
+		for(String x: TwitterAPI.getPesquisa()){
+			String[] aux= x.split(" ");
+		
+			for (int i=0;i!=aux.length;i++)
+				if(aux[i].equals(s))
+					pesquisa.add(x);
+				}		
+	}
+	
+	public void setPesquisa(ArrayList<String> pesquisa) {
+		this.pesquisa = pesquisa;
+	}
+
+	/**
+	 * Fun√ß√£o que atualiza o painel, depois do login, para que o feed apare√ßa.
 	 */
 	private void feed(){
+		
+		pesquisa.clear();
 		List<Status> status_iscte = null;				
 		feed = new JTextArea ( 80,2);
 		JScrollPane scrollArea = new JScrollPane(feed);
@@ -76,7 +97,9 @@ public class Twitter_GUI  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		feed.append(TwitterAPI.getTimelineText(status_iscte));
+		
 		feed.setForeground(Color.WHITE);
 		feed.setBackground(new Color(0,0,0,115));
 		JScrollPane scroll = new JScrollPane(feed);			
@@ -84,6 +107,10 @@ public class Twitter_GUI  {
         scroll.setOpaque(false);
 		panel.removeAll();			
 		panel.add(scroll);
+	}
+
+public ArrayList<String> getPesquisa() {
+		return pesquisa;
 	}
 
 /**
