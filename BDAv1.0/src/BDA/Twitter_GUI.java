@@ -1,4 +1,5 @@
-package GUI;
+package BDA;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
@@ -14,7 +15,6 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import Twitter.TwitterAPI;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 /**
