@@ -1,5 +1,8 @@
-package Twitter;
+package BDA;
 
+
+
+import java.util.ArrayList;
 import java.util.List;
 
 import twitter4j.Paging;
@@ -11,7 +14,31 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterAPI {
 	
-	private final int TWEET_NUMBER = 100;
+	private final static int TWEET_NUMBER = 100;
+	
+	/**Gets the List containing objects of the type GeneralMessage
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public static ArrayList<GeneralMessage> getList(String user) {
+		ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
+		try {
+			List<Status> statuses = getTimeline(user);
+			for(Status status : statuses) {
+				GeneralMessage msg = new GeneralMessage();
+				msg.setBody(status.getText());
+				msg.setSource("@" + status.getUser().getName());
+				msg.setSubject("");
+				msg.setType(GeneralMessage.TWITTER);
+				list.add(msg);
+			}
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	/** Gets a user's tweets
 	 * 
@@ -20,7 +47,7 @@ public class TwitterAPI {
 	 */
 	public static List<Status> getTimeline(String user) throws TwitterException {
 		
-		Paging page = new Paging(1,100);
+		Paging page = new Paging(1,TWEET_NUMBER);
 		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
     	cb.setDebugEnabled(true)
@@ -62,11 +89,13 @@ public class TwitterAPI {
 		result += "------------------------\n Showing user's timeline \n------------------------" + "\n";
  		int counter=1;
         for (Status status : statuses) {
+//        	pesquisa.add(getTweet(status));
         	result += "@"+ status.getUser().getName() + ": " + status.getText() + "\n" +
         			  "Retweets: " + status.getRetweetCount() + "         Favorites: " + status.getFavoriteCount() + "\n" +
         			  "---------------Tweet Nº " + counter + "---------------\n";
         	counter++;
         }
+        
         return result;
 	}
 	
@@ -77,6 +106,7 @@ public class TwitterAPI {
 	 */
 	public static String getTweet(Status status) {
 		String result = "";
+		
 		result += "@"+ status.getUser().getName() + ": " + status.getText() + "\n" +
   			  "Retweets: " + status.getRetweetCount() + "         Favorites: " + status.getFavoriteCount();
 		return result;
