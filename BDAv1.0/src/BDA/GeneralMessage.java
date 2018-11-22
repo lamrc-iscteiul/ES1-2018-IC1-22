@@ -41,5 +41,26 @@ public class GeneralMessage {
 	public void setSource(String source) {
 		this.source = source;
 	}
+	@Override
+	public String toString() {
+		String s;
+		
+		switch(type) {
+		
+		case GeneralMessage.TWITTER:
+			s = source + ": " + body;
+			break;
+		
+		case GeneralMessage.EMAIL:
+			s = subject;
+			break;
+			
+		default:
+			s = subject;
+			break;
+		}
+		
+		return s;
+	}
 	
 }

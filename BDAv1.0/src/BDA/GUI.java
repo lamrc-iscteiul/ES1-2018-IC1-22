@@ -194,7 +194,7 @@ import java.awt.Toolkit;
 		news_list.setFixedCellWidth(70);
 	    list_pane = new JScrollPane(news_list, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		list_pane.setPreferredSize(new Dimension(70, 40));
-	    list_pane.setMaximumSize(new Dimension(70, 40));
+	  //  list_pane.setMaximumSize(new Dimension(70, 40));
 		coise2= new JPanel();
 		
 		news_list.setModel(model);
@@ -331,8 +331,7 @@ import java.awt.Toolkit;
 		config.setLocation(310,0);
 		config.setAlwaysOnTop(true);
 		config.setResizable(false);
-		
-	}
+			}
 	private void muda(JButton k){
 		panelT.remove(k);
 		config.pack();
@@ -352,7 +351,7 @@ import java.awt.Toolkit;
 			JList<String> list = new JList<>();
 			DefaultListModel<String> P = new DefaultListModel<String>();
 			for (GeneralMessage R : M) {
-				P.addElement(R.toString());
+				P.addElement(R.getBody());
 			}
 			list.setModel(P);
 			JScrollPane scroll = new JScrollPane(list);
@@ -361,7 +360,7 @@ import java.awt.Toolkit;
 				@Override
 				public void valueChanged(ListSelectionEvent arg0) {
 					for (GeneralMessage R : M) {
-						if (list.getSelectedValue().equals(R.toString())) {
+						if (list.getSelectedValue().equals(R.getBody())) {
 							text_area.setText(R.getBody());
 							text_area.setVisible(true);
 			               scroll_pane.add(text_area);
@@ -373,6 +372,7 @@ import java.awt.Toolkit;
 				}
 			});
 			list_pane=scroll;
+			list_pane.setPreferredSize(new Dimension(70, 40));
 			frame.pack();
 		}
 }

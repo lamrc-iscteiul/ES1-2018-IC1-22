@@ -269,4 +269,4 @@ public class EmailAPI {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+}
