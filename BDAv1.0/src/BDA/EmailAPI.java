@@ -119,7 +119,11 @@ public class EmailAPI {
     	ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
 		try {
 			mail = new EmailAPI();
+
 	        mail.setUserPass("jmmpa111@iscte-iul.pt", "pm1998JPIUL");
+
+	        
+
 	        mail.connect();
 	        mail.openFolder("INBOX");
 	        mail.transformMessageToList();
@@ -265,4 +269,4 @@ public class EmailAPI {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-}
+
