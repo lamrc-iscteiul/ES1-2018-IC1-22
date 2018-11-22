@@ -89,7 +89,7 @@ public class EmailAPI {
     }
     
     @SuppressWarnings("unused")
-    private void transformMessageToList() throws Exception{
+    public void transformMessageToList() throws Exception{
     	 Message msgs[] = folder.getMessages();
          FetchProfile fp = new FetchProfile();
          folder.fetch(msgs, fp);
@@ -102,14 +102,19 @@ public class EmailAPI {
         	 message2.setSource(message.getFrom()[0].toString());
         	 message2.setSubject(message.getSubject());
         	 message2.setType(GeneralMessage.EMAIL);
+        	 messages.add(message2);
          }
     }
     
-    private ArrayList<GeneralMessage> getMessages() {
+    public ArrayList<GeneralMessage> getMessages() {
     	return messages;
     }
     
-    public static ArrayList<GeneralMessage> getList() {
+    public POP3Folder getFolder() {
+		return folder;
+	}
+
+	public static ArrayList<GeneralMessage> getList() {
     	EmailAPI mail;
     	ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
 		try {
@@ -244,4 +249,20 @@ public class EmailAPI {
         }
 
     }
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

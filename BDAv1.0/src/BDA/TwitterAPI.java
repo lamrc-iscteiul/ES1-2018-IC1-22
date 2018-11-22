@@ -43,7 +43,7 @@ public class TwitterAPI {
 	 * @param user Desired user's usernam
 	 * @returns List of the user's statuses
 	 */
-	private static List<Status> getTimeline(String user) throws TwitterException {
+	public static List<Status> getTimeline(String user) throws TwitterException {
 		
 		Paging page = new Paging(1,TWEET_NUMBER);
 		
