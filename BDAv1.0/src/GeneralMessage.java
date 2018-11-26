@@ -1,4 +1,3 @@
-package BDA;
 
 public class GeneralMessage {
 
@@ -41,6 +40,7 @@ public class GeneralMessage {
 	public void setSource(String source) {
 		this.source = source;
 	}
+	
 	@Override
 	public String toString() {
 		String s;
