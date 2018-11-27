@@ -54,6 +54,7 @@ public class GUI {
 	private void initialize() {
 		TwitterAPI tweet = new TwitterAPI();
 		EmailAPI mail = null;
+		FaceAPI face = new FaceAPI();
 		try {
 			mail = new EmailAPI();
 		} catch (Exception e) {
@@ -75,6 +76,11 @@ public class GUI {
 		frame.getContentPane().add(btnPesquisar);
 		
 		JToggleButton tglbtnFacebook = new JToggleButton("Facebook");
+		tglbtnFacebook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mudaRespostas(face.getList());
+			}
+		});
 		tglbtnFacebook.setBounds(858, 76, 119, 35);
 		frame.getContentPane().add(tglbtnFacebook);
 		
