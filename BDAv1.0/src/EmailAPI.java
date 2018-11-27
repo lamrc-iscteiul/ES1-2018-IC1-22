@@ -3,18 +3,22 @@
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.mail.BodyPart;
 import javax.mail.FetchProfile;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.URLName;
 import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 
 import com.sun.mail.pop3.POP3Folder;
 import com.sun.mail.pop3.POP3SSLStore;
@@ -98,7 +102,11 @@ public class EmailAPI {
          for(int i = 0; i < max2; i++){
         	 Message message = msgs[msgs.length - (i + 1)];
         	 GeneralMessage message2 = new GeneralMessage();
-        	 message2.setBody(message.getContent().toString());
+//        	 message2.setBody(message.getContent().toString());
+        	 message2.setBody(getTextFromMessage(message));
+        	 if(message2.getBody().equals("")) {
+        		 message2.setBody("[image]");
+        	 }
         	 message2.setSource(message.getFrom()[0].toString());
         	 message2.setSubject(message.getSubject());
         	 message2.setType(GeneralMessage.EMAIL);
@@ -169,7 +177,8 @@ public class EmailAPI {
         int max2 = 5;
         for(int i = 0; i < max2; i++){
             Message message = msgs[msgs.length - (i + 1)];
-            dumpEnvelope(msgs[i]);
+//            dumpEnvelope(msgs[i]);
+            getTextFromMessage(msgs[i]);
             System.out.println("==============================");
             System.out.println("Email #" + (i + 1));
             System.out.println("Subject: " + message.getSubject());
@@ -193,62 +202,95 @@ public class EmailAPI {
         is.close();
         return count;
     }
-
-    @SuppressWarnings("unused")
-    private static void dumpEnvelope(Message m) throws Exception
-    {
-		String body="";
-        String path="";
-        int size=0;
-        Object content = m.getContent();
-        if(content instanceof String){
-            body = (String)content;
+    
+    private String getTextFromMessage(Message message) throws MessagingException, IOException {
+        String result = "";
+        try {
+        if (message.isMimeType("text/plain")) {
+            result = message.getContent().toString();
+        } else if (message.isMimeType("multipart/*")) {
+            MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
+            result = getTextFromMimeMultipart(mimeMultipart);
         }
-        else if(content instanceof Multipart)
-        {
-            Multipart mp = (Multipart)content;
-            for (int j=0; j < mp.getCount(); j++)
-            {
-                Part part = mp.getBodyPart(j);
-                String disposition = part.getDisposition();
-                //System.out.println("test disposition---->>"+disposition);
-                if (disposition == null) {
-                    // Check if plain
-                    MimeBodyPart mbp = (MimeBodyPart)part;
-                    if (mbp.isMimeType("text/plain")) {
-                        body += mbp.getContent().toString();
-                    }
-                    else if (mbp.isMimeType("TEXT/HTML")) {
-                        body += mbp.getContent().toString();
-                    }
-                    else {
-                        //unknown
-                    }
-                } else if ((disposition != null) &&
-                        (disposition.equals(Part.ATTACHMENT) || disposition.equals
-                        (Part.INLINE) || disposition.equals("ATTACHMENT") || disposition.equals("INLINE")) )
-                {
-                    // Check if plain
-                    MimeBodyPart mbp = (MimeBodyPart)part;
-                    if (mbp.isMimeType("text/plain")) {
-                        body += (String)mbp.getContent();
-                    }
-                    else if (mbp.isMimeType("TEXT/HTML")) {
-                        body += mbp.getContent().toString();
-                    }
-                    else {
-                        File savedir = new File(receiving_attachments);
-                        savedir.mkdirs();
-                        File savefile = new File(savedir+"\\"+part.getFileName());
-                        path = savefile.getAbsolutePath();
-                        size = saveFile( savefile, part);
+        }catch (Exception e) {
+        	e.printStackTrace();
+        }
+        return result;
+    }
 
-                    }
-                }
+    private String getTextFromMimeMultipart(MimeMultipart mimeMultipart)  throws MessagingException, IOException{
+        String result = "";
+        int count = mimeMultipart.getCount();
+        for (int i = 0; i < count; i++) {
+            BodyPart bodyPart = mimeMultipart.getBodyPart(i);
+            if (bodyPart.isMimeType("text/plain")) {
+                result = result + "\n" + bodyPart.getContent();
+                break; // without break same text appears twice in my tests
+            } else if (bodyPart.isMimeType("text/html")) {
+                String html = (String) bodyPart.getContent();
+                result = result + "\n" + org.jsoup.Jsoup.parse(html).text();
+            } else if (bodyPart.getContent() instanceof MimeMultipart){
+                result = result + getTextFromMimeMultipart((MimeMultipart)bodyPart.getContent());
             }
         }
-
+        return result;
     }
+
+//    @SuppressWarnings("unused")
+//    private static void dumpEnvelope(Message m) throws Exception
+//    {
+//		String body="";
+//        String path="";
+//        int size=0;
+//        Object content = m.getContent();
+//        if(content instanceof String){
+//            body = (String)content;
+//        }
+//        else if(content instanceof Multipart)
+//        {
+//            Multipart mp = (Multipart)content;
+//            for (int j=0; j < mp.getCount(); j++)
+//            {
+//                Part part = mp.getBodyPart(j);
+//                String disposition = part.getDisposition();
+//                //System.out.println("test disposition---->>"+disposition);
+//                if (disposition == null) {
+//                    // Check if plain
+//                    MimeBodyPart mbp = (MimeBodyPart)part;
+//                    if (mbp.isMimeType("text/plain")) {
+//                        body += mbp.getContent().toString();
+//                    }
+//                    else if (mbp.isMimeType("TEXT/HTML")) {
+//                        body += mbp.getContent().toString();
+//                    }
+//                    else {
+//                        //unknown
+//                    }
+//                } else if ((disposition != null) &&
+//                        (disposition.equals(Part.ATTACHMENT) || disposition.equals
+//                        (Part.INLINE) || disposition.equals("ATTACHMENT") || disposition.equals("INLINE")) )
+//                {
+//                    // Check if plain
+//                    MimeBodyPart mbp = (MimeBodyPart)part;
+//                    if (mbp.isMimeType("text/plain")) {
+//                        body += (String)mbp.getContent();
+//                    }
+//                    else if (mbp.isMimeType("TEXT/HTML")) {
+//                        body += mbp.getContent().toString();
+//                    }
+//                    else {
+//                        File savedir = new File(receiving_attachments);
+//                        savedir.mkdirs();
+//                        File savefile = new File(savedir+"\\"+part.getFileName());
+//                        path = savefile.getAbsolutePath();
+//                        size = saveFile( savefile, part);
+//
+//                    }
+//                }
+//            }
+//        }
+//
+//    }
 
 	public String getUsername() {
 		return username;
