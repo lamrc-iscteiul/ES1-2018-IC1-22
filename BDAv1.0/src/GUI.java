@@ -24,7 +24,7 @@ public class GUI {
 	JTextArea txtrArea = new JTextArea();
 	DefaultListModel<String> P = new DefaultListModel<String>();
 	ListSelectionListener lsl;
-
+	DefaultListModel<String> search_list = new DefaultListModel<String>();
 	/**
 	 * Launch the application.
 	 */
@@ -74,6 +74,16 @@ public class GUI {
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setBounds(696, 20, 141, 35);
 		frame.getContentPane().add(btnPesquisar);
+		btnPesquisar.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				pesquisar(textField.getText());
+				
+			}
+	
+		}
+		);
 		
 		JToggleButton tglbtnFacebook = new JToggleButton("Facebook");
 		tglbtnFacebook.addActionListener(new ActionListener() {
@@ -148,6 +158,23 @@ public class GUI {
 			tglbtnTwitter.setBounds(858, 20, 119, 35);
 			frame.getContentPane().add(tglbtnTwitter);
 	}
+	
+
+	public void pesquisar(String p){
+		search_list.clear();
+		System.out.println(p);
+		for(Object o:P.toArray()){
+			
+			String [] x=((String) o).split(" ");
+			for(int j=0;j!=x.length;j++)
+				if(p.equals(x[j]) ){
+					search_list.addElement((String) o);
+					break;
+				}
+		}	
+		list.setModel(search_list);	
+	}
+
 	
 public void mudaRespostas(ArrayList<GeneralMessage> M) {
 	lsl = new ListSelectionListener() {
