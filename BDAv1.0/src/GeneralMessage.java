@@ -1,14 +1,14 @@
-package BDA;
-
 public class GeneralMessage {
 
 	public final static int TWITTER = 0;
 	public final static int EMAIL   = 1;
+	public final static int FACEBOOK = 2;
 	
 	private int type;
 	private String subject;
 	private String body;
 	private String source;
+	private String data;
 	
 	public int getType() {
 		return type;
@@ -20,6 +20,9 @@ public class GeneralMessage {
 	
 	public String getBody() {
 		return body;
+	}
+	public String getdata() {
+		return data;
 	}
 	
 	public String getSource() {
@@ -41,6 +44,10 @@ public class GeneralMessage {
 	public void setSource(String source) {
 		this.source = source;
 	}
+	public void setData(String data) {
+		this.data = data;
+	}
+	
 	@Override
 	public String toString() {
 		String s;
@@ -53,6 +60,10 @@ public class GeneralMessage {
 		
 		case GeneralMessage.EMAIL:
 			s = subject;
+			break;
+			
+		case GeneralMessage.FACEBOOK:
+			s= source + "-"+ data+":"+body;
 			break;
 			
 		default:
