@@ -1,4 +1,6 @@
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -65,6 +67,10 @@ public class GUI {
 		frame.setBounds(100, 100, 1024, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Image img = kit.createImage("Images/icon.png");
+		frame.setIconImage(img);
 		
 		textField = new JTextField();
 		textField.setBounds(21, 21, 654, 32);
