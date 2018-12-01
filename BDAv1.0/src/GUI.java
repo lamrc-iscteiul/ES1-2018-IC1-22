@@ -126,6 +126,11 @@ public class GUI {
 		frame.getContentPane().add(btnComentar);
 		
 		JButton btnConfiguraes = new JButton("Configura\u00E7\u00F5es");
+		btnConfiguraes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Configuracoes.main(null);
+			}
+		});
 		btnConfiguraes.setBounds(782, 532, 165, 35);
 		frame.getContentPane().add(btnConfiguraes);
 		

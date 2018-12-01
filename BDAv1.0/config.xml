@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configXML>
+    <email>
+        <email>teste</email>
+        <password>123</password>
+    </email>
+    <facebook>
+        <accessToken>a</accessToken>
+        <password>a</password>
+        <username>a</username>
+    </facebook>
+    <twitter>
+        <accessToken>a</accessToken>
+        <accessTokenSecret>a</accessTokenSecret>
+        <consumerKey>a</consumerKey>
+        <consumerKeySecret>a</consumerKeySecret>
+        <twitterpass>a</twitterpass>
+        <username>a</username>
+    </twitter>
+</configXML>
