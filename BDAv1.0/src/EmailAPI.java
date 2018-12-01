@@ -19,6 +19,8 @@ import javax.mail.Session;
 import javax.mail.URLName;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
 
 import com.sun.mail.pop3.POP3Folder;
 import com.sun.mail.pop3.POP3SSLStore;
@@ -31,6 +33,7 @@ public class EmailAPI {
     private String password;
     private POP3Folder folder;
     private ArrayList<GeneralMessage> messages = new ArrayList<GeneralMessage>();
+    private Configuracoes config;
     
     public static String numberOfFiles = null;
     public static int toCheck = 0;
@@ -126,8 +129,15 @@ public class EmailAPI {
     	EmailAPI mail;
     	ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
 		try {
+			
+			//lê ficheiro XML
+			File file = new File("config.xml");
+	        JAXBContext jaxbContext = JAXBContext.newInstance(configXML.class);
+	        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+	        configXML configXML = (configXML) unmarshaller.unmarshal(file);
+			
 			mail = new EmailAPI();
-	        mail.setUserPass("fmmcp@iscte-iul.pt", "5600749CHITOqaz");
+	        mail.setUserPass(configXML.getEmail().getEmail(), configXML.getEmail().getPassword());
 	        mail.connect();
 	        mail.openFolder("INBOX");
 	        mail.transformMessageToList();
