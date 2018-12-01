@@ -1,7 +1,12 @@
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import twitter4j.Paging;
 import twitter4j.Status;
@@ -45,14 +50,26 @@ public class TwitterAPI {
 	 */
 	public static List<Status> getTimeline(String user) throws TwitterException {
 		
+		configXML configXML = null;
+		//lê ficheiro XML
+		try {
+			File file = new File("config.xml");
+	        JAXBContext jaxbContext = JAXBContext.newInstance(configXML.class);
+	        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+	        configXML = (configXML) unmarshaller.unmarshal(file);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		Paging page = new Paging(1,TWEET_NUMBER);
 		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
     	cb.setDebugEnabled(true)
-    	  .setOAuthConsumerKey("W1f0VvgWPfT8OBqVxvy4Mw")
-    	  .setOAuthConsumerSecret("zKH2yAtRyefwsgOO8h8Szc4kru68iEm95QmIG7svw")
-    	  .setOAuthAccessToken("36481851-VhzByC4f9MSsZES1QZQ4e4iBvA9bWGLyv9HKFpy7c")
-    	  .setOAuthAccessTokenSecret("OahDuXF2Lhl5xlNYALhYZir6xSflAxKP9Zh89T05po");
+    	  .setOAuthConsumerKey(configXML.getTwitter().getConsumerKey())
+    	  .setOAuthConsumerSecret(configXML.getTwitter().getConsumerKeySecret())
+    	  .setOAuthAccessToken(configXML.getTwitter().getAccessToken())
+    	  .setOAuthAccessTokenSecret(configXML.getTwitter().getAccessTokenSecret());
     	TwitterFactory tf = new TwitterFactory(cb.build());
     	
     	Twitter twitter = tf.getInstance();

@@ -7,16 +7,34 @@ import com.restfb.types.*;
 
 
 import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
 public class FaceAPI {
 	
 	public static ArrayList<GeneralMessage> getList() {
 		// TODO Auto-generated method stub
-		String accessToken = "EAAfRHvz32fIBAFrkul9cyURlM2Q4QUgTAuiaZBsX2LjJS2VTIZBYwMftYZCC8wFcpBZAaiNr9wwzVJfzbwwJ7vmTbZAWBxzHoOeSZBIBXSQukobE3lHlt5eTRbZCXWZBjYmrJebceVUZCfwvyDQvlJ1xltVayNdP42kPcAQ7KFMTILZAmH230rCG550fhfkzzahzC696eiqQf4hwZDZD";
+		configXML configXML = null;
+		
+		try {
+			//lê ficheiro XML
+			File file = new File("config.xml");
+	        JAXBContext jaxbContext = JAXBContext.newInstance(configXML.class);
+	        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+	        configXML = (configXML) unmarshaller.unmarshal(file);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String accessToken = configXML.getFacebook().getAccessToken();
 		
 		FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_11);
 		User me = fbClient.fetchObject("me", User.class);
