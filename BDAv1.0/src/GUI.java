@@ -22,11 +22,14 @@ public class GUI {
 
 	private JFrame frame;
 	private JTextField textField;
-	JList<String> list = new JList<>();
+	JList<GeneralMessage> list = new JList<>();
 	JTextArea txtrArea = new JTextArea();
-	DefaultListModel<String> P = new DefaultListModel<String>();
+	DefaultListModel<GeneralMessage> P = new DefaultListModel<GeneralMessage>();
 	ListSelectionListener lsl;
-	DefaultListModel<String> search_list = new DefaultListModel<String>();
+	DefaultListModel<GeneralMessage> search_list = new DefaultListModel<GeneralMessage>();
+	JButton btnRetweetar;
+	JButton btnComentar;
+	JButton btnResponder;
 	/**
 	 * Launch the application.
 	 */
@@ -94,7 +97,20 @@ public class GUI {
 		JToggleButton tglbtnFacebook = new JToggleButton("Facebook");
 		tglbtnFacebook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+			if(tglbtnFacebook.isSelected()) {
 				mudaRespostas(face.getList());
+			} else {
+				list.removeListSelectionListener(lsl);
+				txtrArea.setText(null);
+				int size= P.getSize();
+				
+				for(int i=size-1; i>=0;i--) {
+					GeneralMessage a=P.getElementAt(i);
+					if(a.getType()==GeneralMessage.TWITTER) {
+						P.removeElementAt(i);
+						}
+					}
+				}
 			}
 		});
 		tglbtnFacebook.setBounds(858, 76, 119, 35);
@@ -103,7 +119,21 @@ public class GUI {
 		JToggleButton tglbtnEmail = new JToggleButton("E-Mail");
 		tglbtnEmail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+			if(tglbtnEmail.isSelected()) {
 				mudaRespostas(mail.getList());
+			} else {
+				list.removeListSelectionListener(lsl);
+				txtrArea.setText(null);
+				int size= P.getSize();
+				
+				for(int i=size-1; i>=0;i--) {
+					GeneralMessage a=P.getElementAt(i);
+					if(a.getType()==GeneralMessage.EMAIL) {
+						P.removeElementAt(i);
+						}
+					}
+				}
+				
 			}
 		});
 		tglbtnEmail.setBounds(858, 132, 119, 35);
@@ -113,15 +143,15 @@ public class GUI {
 		lblAes.setBounds(21, 495, 92, 26);
 		frame.getContentPane().add(lblAes);
 		
-		JButton btnResponder = new JButton("Responder");
+		btnResponder = new JButton("Responder");
 		btnResponder.setBounds(21, 532, 141, 35);
 		frame.getContentPane().add(btnResponder);
 		
-		JButton btnRetweetar = new JButton("ReTweetar");
+		btnRetweetar = new JButton("ReTweetar");
 		btnRetweetar.setBounds(188, 532, 141, 35);
 		frame.getContentPane().add(btnRetweetar);
 		
-		JButton btnComentar = new JButton("Comentar");
+		btnComentar = new JButton("Comentar");
 		btnComentar.setBounds(350, 532, 141, 35);
 		frame.getContentPane().add(btnComentar);
 		
@@ -139,7 +169,7 @@ public class GUI {
 		frame.getContentPane().add(scrollPane);
 			scrollPane.setViewportView(txtrArea);
 		
-			txtrArea.setText("Area");
+			txtrArea.setText("Bem-vind@!");
 			
 			JScrollPane scrollPane_1 = new JScrollPane();
 			scrollPane_1.setBounds(21, 74, 308, 400);
@@ -150,6 +180,7 @@ public class GUI {
 			tglbtnTwitter.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if(tglbtnTwitter.isSelected()) {
+						//list.removeListSelectionListener(lsl);
 					mudaRespostas(tweet.getList("@ISCTEIUL"));
 					}
 					else {
@@ -158,8 +189,8 @@ public class GUI {
 						int size= P.getSize();
 						
 						for(int i=size-1; i>=0;i--) {
-							String a=P.getElementAt(i);
-							if(a.startsWith("@")) {
+							GeneralMessage a=P.getElementAt(i);
+							if(a.getType()==GeneralMessage.TWITTER) {
 								P.removeElementAt(i);
 							}
 						}
@@ -175,11 +206,8 @@ public class GUI {
 		search_list.clear();
 		System.out.println(p);
 		for(Object o:P.toArray()){
-			
-			String [] x=((String) o).split(" ");
-			for(int j=0;j!=x.length;j++)
-				if(p.equals(x[j]) ){
-					search_list.addElement((String) o);
+				if(o.toString().contains(p) ){
+					search_list.addElement((GeneralMessage) o);
 					break;
 				}
 		}	
@@ -192,21 +220,39 @@ public void mudaRespostas(ArrayList<GeneralMessage> M) {
 
 		@Override
 		public void valueChanged(ListSelectionEvent arg0) {
-			for (GeneralMessage R : M) {
-				if (list.getSelectedValue().equals(R.toString())) {
-					txtrArea.setText(R.getBody());
-					break;
+			int size= P.getSize();
+			
+			for(int i=size-1; i>=0;i--) {
+				GeneralMessage a=P.getElementAt(i);
+				if(list.getSelectedValue()==a) {
+					txtrArea.setText(a.getBody());
 				}
 			}
-
+			if(list.getSelectedValue()!=null) {
+			if(list.getSelectedValue().getType()==GeneralMessage.TWITTER) {
+				btnComentar.setEnabled(false);
+				btnResponder.setEnabled(false);
+				btnRetweetar.setEnabled(true);
+			}
+			if(list.getSelectedValue().getType()==GeneralMessage.FACEBOOK) {
+				btnComentar.setEnabled(true);
+				btnResponder.setEnabled(false);
+				btnRetweetar.setEnabled(false);
+			}
+			if(list.getSelectedValue().getType()==GeneralMessage.EMAIL) {
+				btnComentar.setEnabled(false);
+				btnResponder.setEnabled(true);
+				btnRetweetar.setEnabled(false);
+			}
+			}
 		}
 	};
 		if (M.isEmpty()) {
-			P.addElement("Sem Resultados");
+			//P.addElement("Sem Resultados");
 		} else {
 			
 			for (GeneralMessage R : M) {
-				P.addElement(R.toString());
+				P.addElement(R);
 			}
 			list.setModel(P);
 			list.addListSelectionListener(lsl);
