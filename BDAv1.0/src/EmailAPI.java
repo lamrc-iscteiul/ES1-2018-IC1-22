@@ -41,10 +41,22 @@ public class EmailAPI {
     URLName url;
     public static String receiving_attachments="C:\\download";
 
-    public EmailAPI() throws Exception
+    public EmailAPI()
     {
-        session = null;
-        store = null;	
+    	try {
+	        session = null;
+	        store = null;
+	        
+	        File file = new File("config.xml");
+	        JAXBContext jaxbContext = JAXBContext.newInstance(configXML.class);
+	        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+	        configXML configXML = (configXML) unmarshaller.unmarshal(file);
+			
+	        setUserPass(configXML.getEmail().getEmail(), configXML.getEmail().getPassword());
+	        connect();
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    	}
     }
 
     /**Sets user's username and password for e-mail login
@@ -75,6 +87,8 @@ public class EmailAPI {
         session = Session.getInstance(pop3Props, null);
         store = new POP3SSLStore(session, url);
         store.connect();
+        openFolder("INBOX");
+        transformMessageToList();
     }
 
     public void openFolder(String folderName)
@@ -97,6 +111,7 @@ public class EmailAPI {
     
     @SuppressWarnings("unused")
     public void transformMessageToList() throws Exception{
+    	 folder.getMessages();
     	 Message msgs[] = folder.getMessages();
          FetchProfile fp = new FetchProfile();
          folder.fetch(msgs, fp);
@@ -104,16 +119,8 @@ public class EmailAPI {
          int max2 = 5;
          for(int i = 0; i < max2; i++){
         	 Message message = msgs[msgs.length - (i + 1)];
-        	 GeneralMessage message2 = new GeneralMessage();
-//        	 message2.setBody(message.getContent().toString());
-        	 message2.setBody(getTextFromMessage(message));
-        	 if(message2.getBody().equals("")) {
-        		 message2.setBody("[image]");
-        	 }
-        	 message2.setSource(message.getFrom()[0].toString());
-        	 message2.setSubject(message.getSubject());
-        	 message2.setType(GeneralMessage.EMAIL);
-        	 messages.add(message2);
+        	 GeneralMessage general_message = new GeneralMessage(GeneralMessage.EMAIL, message);
+        	 messages.add(general_message);
          }
     }
     
@@ -125,31 +132,35 @@ public class EmailAPI {
 		return folder;
 	}
 
-	public static ArrayList<GeneralMessage> getList() {
-    	EmailAPI mail;
-    	ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
-		try {
-			
-			//lê ficheiro XML
-			File file = new File("config.xml");
-	        JAXBContext jaxbContext = JAXBContext.newInstance(configXML.class);
-	        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-	        configXML configXML = (configXML) unmarshaller.unmarshal(file);
-			
-			mail = new EmailAPI();
-	        mail.setUserPass(configXML.getEmail().getEmail(), configXML.getEmail().getPassword());
-	        mail.connect();
-	        mail.openFolder("INBOX");
-	        mail.transformMessageToList();
-	        list = mail.getMessages();
-	        mail.disconnect();
-	        mail.finalize();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
-		return list;
+//	public ArrayList<GeneralMessage> getList() {
+//    	EmailAPI mail;
+//    	ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
+//		try {
+//			
+//			//lê ficheiro XML
+//			File file = new File("config.xml");
+//	        JAXBContext jaxbContext = JAXBContext.newInstance(configXML.class);
+//	        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+//	        configXML configXML = (configXML) unmarshaller.unmarshal(file);
+//			
+//			mail = new EmailAPI();
+//	        mail.setUserPass(configXML.getEmail().getEmail(), configXML.getEmail().getPassword());
+//	        mail.connect();
+//	        mail.openFolder("INBOX");
+//	        mail.transformMessageToList();
+//	        list = mail.getMessages();
+//	        mail.disconnect();
+//	        mail.finalize();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} catch (Throwable t) {
+//			t.printStackTrace();
+//		}
+//		return list;
+//    }
+    
+    public ArrayList<GeneralMessage> getList() {
+		return messages;
     }
 
     public void closeFolder()
@@ -187,8 +198,7 @@ public class EmailAPI {
         int max2 = 5;
         for(int i = 0; i < max2; i++){
             Message message = msgs[msgs.length - (i + 1)];
-//            dumpEnvelope(msgs[i]);
-            getTextFromMessage(msgs[i]);
+            messageToString(msgs[i]);
             System.out.println("==============================");
             System.out.println("Email #" + (i + 1));
             System.out.println("Subject: " + message.getSubject());
@@ -213,7 +223,7 @@ public class EmailAPI {
         return count;
     }
     
-    private String getTextFromMessage(Message message) throws MessagingException, IOException {
+    public static String messageToString(Message message) throws MessagingException, IOException {
         String result = "";
         try {
         if (message.isMimeType("text/plain")) {
@@ -228,7 +238,7 @@ public class EmailAPI {
         return result;
     }
 
-    private String getTextFromMimeMultipart(MimeMultipart mimeMultipart)  throws MessagingException, IOException{
+    private static String getTextFromMimeMultipart(MimeMultipart mimeMultipart)  throws MessagingException, IOException{
         String result = "";
         int count = mimeMultipart.getCount();
         for (int i = 0; i < count; i++) {

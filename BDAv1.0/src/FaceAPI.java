@@ -37,20 +37,22 @@ public class FaceAPI {
 		String accessToken = configXML.getFacebook().getAccessToken();
 		
 		FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_11);
+		
+		@SuppressWarnings("unused")
 		User me = fbClient.fetchObject("me", User.class);
 		
 		Connection<Post> result = fbClient.fetchConnection("me/feed",Post.class);
 		ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
-			GeneralMessage msg = new GeneralMessage();
-			if(aPost.getMessage() != null){
-				msg.setBody(aPost.getMessage());
-				msg.setData(aPost.getCreatedTime().toString());
-			msg.setSource("@João Pimenta");
-			msg.setType(GeneralMessage.FACEBOOK);
-			list.add(msg);
-			}
+			GeneralMessage msg = new GeneralMessage(GeneralMessage.FACEBOOK, aPost);
+				if(aPost.getMessage() != null){
+//					msg.setBody(aPost.getMessage());
+//					msg.setData(aPost.getCreatedTime().toString());
+//					msg.setSource("@João Pimenta");
+//					msg.setType(GeneralMessage.FACEBOOK);
+					list.add(msg);
+				}
 			}
 			
 		}
@@ -58,5 +60,9 @@ public class FaceAPI {
 		return list;
 	}
 	
-	
+//	TODO Create the toString function for the post to show in the GUI
+	public static String postToString(Post post) {
+		String s = "";
+		return s;
+	}
 }

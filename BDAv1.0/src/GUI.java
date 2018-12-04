@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.mail.MessagingException;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
@@ -16,6 +17,7 @@ import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class GUI {
@@ -58,14 +60,9 @@ public class GUI {
 	 */
 	private void initialize() {
 		TwitterAPI tweet = new TwitterAPI();
-		EmailAPI mail = null;
+		EmailAPI mail = new EmailAPI();
 		FaceAPI face = new FaceAPI();
-		try {
-			mail = new EmailAPI();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1024, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -223,9 +220,26 @@ public void mudaRespostas(ArrayList<GeneralMessage> M) {
 			int size= P.getSize();
 			
 			for(int i=size-1; i>=0;i--) {
-				GeneralMessage a=P.getElementAt(i);
+				GeneralMessage a = P.getElementAt(i);
 				if(list.getSelectedValue()==a) {
-					txtrArea.setText(a.getBody());
+					int type = a.getType();
+					switch(type) {
+					
+					case GeneralMessage.TWITTER:
+						txtrArea.setText(TwitterAPI.statusToString(a.getStatus()));
+						break;
+					case GeneralMessage.EMAIL:
+						try {
+							txtrArea.setText(EmailAPI.messageToString(a.getMessage()));
+						} catch (MessagingException | IOException e) {
+							e.printStackTrace();
+						}
+						break;
+					case GeneralMessage.FACEBOOK:
+						txtrArea.setText(FaceAPI.postToString(a.getPost()));
+						break;
+					}
+//					txtrArea.setText(a.getBody());
 				}
 			}
 			if(list.getSelectedValue()!=null) {

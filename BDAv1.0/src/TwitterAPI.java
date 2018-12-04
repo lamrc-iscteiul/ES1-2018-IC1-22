@@ -29,11 +29,7 @@ public class TwitterAPI {
 		try {
 			List<Status> statuses = getTimeline(user);
 			for(Status status : statuses) {
-				GeneralMessage msg = new GeneralMessage();
-				msg.setBody(status.getText());
-				msg.setSource("@" + status.getUser().getName());
-				msg.setSubject("");
-				msg.setType(GeneralMessage.TWITTER);
+				GeneralMessage msg = new GeneralMessage(GeneralMessage.TWITTER, status);
 				list.add(msg);
 			}
 		} catch (TwitterException e) {
@@ -119,7 +115,7 @@ public class TwitterAPI {
 	 * @param status Tweet to print
 	 * @return Tweet as a String
 	 */
-	public static String getTweet(Status status) {
+	public static String statusToString(Status status) {
 		String result = "";
 		
 		result += "@"+ status.getUser().getName() + ": " + status.getText() + "\n" +

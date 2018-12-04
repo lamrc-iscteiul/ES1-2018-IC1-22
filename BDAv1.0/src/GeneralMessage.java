@@ -1,73 +1,83 @@
+import javax.mail.Message;
+import javax.mail.MessagingException;
+
+import com.restfb.types.Post;
+
+import twitter4j.Status;
+
 public class GeneralMessage {
 
-	public final static int TWITTER = 0;
-	public final static int EMAIL   = 1;
+	public final static int TWITTER  = 0;
+	public final static int EMAIL    = 1;
 	public final static int FACEBOOK = 2;
 	
 	private int type;
-	private String subject;
-	private String body;
-	private String source;
-	private String data;
+	private Status twitter_status;
+	private Message mail_message;
+	private Post facebook_post;
+	
+	public GeneralMessage(int type, Object obj) {
+		this.type = type;
+		switch(type) {
+		
+		case GeneralMessage.TWITTER:
+			twitter_status = (Status) obj;
+			break;
+		
+		case GeneralMessage.EMAIL:
+			mail_message = (Message) obj;
+			break;
+			
+		case GeneralMessage.FACEBOOK:
+			facebook_post = (Post) obj;
+			break;
+			
+		default:
+			break;
+		}
+	}
 	
 	public int getType() {
 		return type;
 	}
 	
-	public String getSubject() {
-		return subject;
-	}
-	
-	public String getBody() {
-		return body;
-	}
-	public String getdata() {
-		return data;
-	}
-	
-	public String getSource() {
-		return source;
+	public Message getMessage() {
+		return mail_message;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public Status getStatus() {
+		return twitter_status;
 	}
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-
-	public void setBody(String body) {
-		this.body = body;
-	}
-
-	public void setSource(String source) {
-		this.source = source;
-	}
-	public void setData(String data) {
-		this.data = data;
+	public Post getPost() {
+		return facebook_post;
 	}
 	
 	@Override
 	public String toString() {
-		String s;
+		String s = "";
 		
 		switch(type) {
 		
 		case GeneralMessage.TWITTER:
-			s = source + ": " + body;
+			s = "@" + twitter_status.getUser().getName() + ": " + twitter_status.getText();
 			break;
 		
 		case GeneralMessage.EMAIL:
-			s = subject;
+			try {
+				s = mail_message.getFrom()[0].toString();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 			
 		case GeneralMessage.FACEBOOK:
-			s= source + "-"+ data+":"+body;
+			s = facebook_post.getMessage();
 			break;
 			
 		default:
-			s = subject;
+			s = "Error: Type not supported!";
 			break;
 		}
 		
