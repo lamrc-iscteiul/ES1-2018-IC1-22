@@ -64,7 +64,7 @@ public class GUI {
 		TwitterAPI tweet = new TwitterAPI();
 		EmailAPI mail = new EmailAPI();
 		FaceAPI face = new FaceAPI();
-		Configuracoes.main(null);
+		Configuracoes.init();
 		frame = new JFrame();
 		frame.setTitle("BDA Project");
 		frame.setBounds(100, 100, 1024, 700);
@@ -147,7 +147,6 @@ public class GUI {
 		btnResponder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Responder responder= new Responder();
-				Responder.main(null);
 				int size= P.getSize();
 				
 				for(int i=size-1; i>=0;i--) {

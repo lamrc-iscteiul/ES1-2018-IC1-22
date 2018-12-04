@@ -51,7 +51,10 @@ public class Configuracoes {
 			}
 		});
 	}
-
+	public static void init() {
+		window = new Configuracoes();
+	}
+	
 	/**
 	 * Create the application.
 	 */

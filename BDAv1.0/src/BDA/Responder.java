@@ -13,11 +13,11 @@ import java.awt.event.ActionEvent;
 public class Responder {
 
 	private JFrame frame;
-	private static JTextField textDe = new JTextField();
-	private static JTextField textPara = new JTextField();
+	private JTextField textDe = new JTextField();
+	private JTextField textPara = new JTextField();
 	//static Responder window = new Responder();
 	//private static EmailAPI email= new EmailAPI();
-	private static JTextField txtRe;
+	private JTextField txtRe;
 
 	/**
 	 * Launch the application.
@@ -48,6 +48,7 @@ public class Responder {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setVisible(true);
 		frame.setBounds(100, 100, 450, 500);
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -103,15 +104,15 @@ public class Responder {
 
 
 
-	public static void setTextDe(String textDe) {
-		Responder.textDe.setText(textDe);
+	public void setTextDe(String textDe) {
+		this.textDe.setText(textDe);
 	}
 
-	public static void setTextAssunto(String textAssunto) {
-		Responder.txtRe.setText(textAssunto);
+	public void setTextAssunto(String textAssunto) {
+		this.txtRe.setText(textAssunto);
 	}
 
-	public static void setTextPara(String textPara) {
-		Responder.textPara.setText(textPara);
+	public void setTextPara(String textPara) {
+		this.textPara.setText(textPara);
 	}
 }
