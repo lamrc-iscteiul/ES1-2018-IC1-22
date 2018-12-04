@@ -10,15 +10,21 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.FetchProfile;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.URLName;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -30,8 +36,8 @@ public class EmailAPI {
 
 	private Session session;
     private POP3SSLStore store;
-    private String username;
-    private String password;
+    private static String username;
+    private static String password;
     private POP3Folder folder;
     private ArrayList<GeneralMessage> messages = new ArrayList<GeneralMessage>();
     private Configuracoes config;
@@ -327,5 +333,34 @@ public class EmailAPI {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public static void enviarMail(String de, String destino, String assunto, String texto) throws AddressException, MessagingException {
+		Properties props = null;
+		props = new Properties();
+        props.put("mail.smtp.auth", true);
+        props.put("mail.smtp.starttls.enable", true);
+        props.put("mail.smtp.host", "smtp.outlook.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.user", username);
+        props.put("mail.smtp.pwd", password);
+        
+        Session session2 = Session.getDefaultInstance(props,
+        	    new Authenticator() {
+        	        protected PasswordAuthentication  getPasswordAuthentication() {
+        	        return new PasswordAuthentication(
+        	                    username, password);
+        	                }
+        	    });
+     //   session2.setDebug(true);
+		
+		MimeMessage message = new MimeMessage(session2);
+		message.setFrom(new InternetAddress(de));
+		message.addRecipient(Message.RecipientType.TO, new InternetAddress(destino));
+		message.setSubject(assunto);
+		message.setText(texto);
+		Transport transport = session2.getTransport("smtp");
+	    transport.connect("smtp.outlook.com", 587, username, password);
+		transport.send(message);
 	}
 }

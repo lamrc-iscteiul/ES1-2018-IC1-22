@@ -33,6 +33,7 @@ public class GUI {
 	JButton btnRetweetar;
 	JButton btnComentar;
 	JButton btnResponder;
+	//Configuracoes configuracoes= new Configuracoes();
 	/**
 	 * Launch the application.
 	 */
@@ -63,8 +64,9 @@ public class GUI {
 		TwitterAPI tweet = new TwitterAPI();
 		EmailAPI mail = new EmailAPI();
 		FaceAPI face = new FaceAPI();
-		
+		Configuracoes.main(null);
 		frame = new JFrame();
+		frame.setTitle("BDA Project");
 		frame.setBounds(100, 100, 1024, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -142,6 +144,27 @@ public class GUI {
 		frame.getContentPane().add(lblAes);
 		
 		btnResponder = new JButton("Responder");
+		btnResponder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Responder responder= new Responder();
+				Responder.main(null);
+				int size= P.getSize();
+				
+				for(int i=size-1; i>=0;i--) {
+					GeneralMessage a=P.getElementAt(i);
+					if(a.toString().equals(list.getSelectedValue().toString())) {
+						responder.setTextDe(Configuracoes.getText_email_user());
+						responder.setTextPara(a.toString());
+						try {
+							responder.setTextAssunto("RE: "+a.getMessage().getSubject());
+						} catch (MessagingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						}
+					}
+			}
+		});
 		btnResponder.setBounds(21, 532, 141, 35);
 		frame.getContentPane().add(btnResponder);
 		
@@ -156,7 +179,7 @@ public class GUI {
 		JButton btnConfiguraes = new JButton("Configura\u00E7\u00F5es");
 		btnConfiguraes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Configuracoes.main(null);
+				Configuracoes.visible(true);;
 			}
 		});
 		btnConfiguraes.setBounds(782, 532, 165, 35);

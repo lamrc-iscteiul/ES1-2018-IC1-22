@@ -23,18 +23,19 @@ import javax.swing.JFrame;
 public class Configuracoes {
 
 	private JFrame configFrame;
-	private JTextField text_email_user;
-	private JTextField text_email_pass;
-	private JTextField text_twitter_user;
-	private JTextField text_twitter_pass;
-	private JTextField text_twitter_consumerkey;
-	private JTextField text_twitter_consumersecret;
-	private JTextField text_twitter_accesstoken;
-	private JTextField text_twitter_accesstokensecret;
-	private JTextField text_facebook_user;
-	private JTextField text_facebook_pass;
-	private JTextField text_facebook_accesstoken;
+	private static JTextField text_email_user;
+	private static JTextField text_email_pass;
+	private static JTextField text_twitter_user;
+	private static JTextField text_twitter_pass;
+	private static JTextField text_twitter_consumerkey;
+	private static JTextField text_twitter_consumersecret;
+	private static JTextField text_twitter_accesstoken;
+	private static JTextField text_twitter_accesstokensecret;
+	private static JTextField text_facebook_user;
+	private static JTextField text_facebook_pass;
+	private static JTextField text_facebook_accesstoken;
 	private configXML configXML;
+	private static Configuracoes window;
 	/**
 	 * Launch the application.
 	 */
@@ -42,8 +43,8 @@ public class Configuracoes {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Configuracoes window = new Configuracoes();
-					window.configFrame.setVisible(true);
+					 window = new Configuracoes();
+					//window.configFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -316,6 +317,14 @@ public class Configuracoes {
         JAXBContext jaxbContext = JAXBContext.newInstance(configXML.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         configXML = (configXML) unmarshaller.unmarshal(file);
+	}
+	
+	public static String getText_email_user() {
+		return text_email_user.getText();
+	}
+	
+	public static void visible(boolean a) {
+		window.configFrame.setVisible(a);
 	}
 	
 }
