@@ -7,7 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import BDA.TwitterStatusesTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TwitterStatusesTest.class, TwitterGetTweettest.class, TwitterMessageListTest.class })
+@SuiteClasses({ TwitterStatusesTest.class, TwitterMessageListTest.class })
 
 
 /**
