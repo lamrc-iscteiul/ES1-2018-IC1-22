@@ -107,7 +107,7 @@ public class GUI {
 				
 				for(int i=size-1; i>=0;i--) {
 					GeneralMessage a=P.getElementAt(i);
-					if(a.getType()==GeneralMessage.TWITTER) {
+					if(a.getType()==GeneralMessage.FACEBOOK) {
 						P.removeElementAt(i);
 						}
 					}
