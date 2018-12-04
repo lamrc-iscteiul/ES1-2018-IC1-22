@@ -1,4 +1,5 @@
 package BDA;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -294,6 +295,16 @@ public void mudaRespostas(ArrayList<GeneralMessage> M) {
 			list.setModel(P);
 			list.addListSelectionListener(lsl);
 		}
+}
+
+public Component getFrame() {
+	// TODO Auto-generated method stub
+	return frame;
+}
+
+public JList<GeneralMessage> getList() {
+	// TODO Auto-generated method stub
+	return list;
 }
 	
 	
