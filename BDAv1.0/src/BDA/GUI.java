@@ -224,6 +224,11 @@ public class GUI {
 	
 
 	public void pesquisar(String p){
+		if(p.isEmpty()) {
+			list.setModel(P);
+		}else {
+			
+		
 		search_list.clear();
 		System.out.println(p);
 		for(Object o:P.toArray()){
@@ -233,6 +238,7 @@ public class GUI {
 				}
 		}	
 		list.setModel(search_list);	
+		}
 	}
 
 	
