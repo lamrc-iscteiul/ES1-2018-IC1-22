@@ -30,6 +30,10 @@ public class GUI {
 	JTextArea txtrArea = new JTextArea();
 	DefaultListModel<GeneralMessage> P = new DefaultListModel<GeneralMessage>();
 	ListSelectionListener lsl;
+	public ListSelectionListener getLsl() {
+		return lsl;
+	}
+
 	DefaultListModel<GeneralMessage> search_list = new DefaultListModel<GeneralMessage>();
 	JButton btnRetweetar;
 	JButton btnComentar;
