@@ -111,7 +111,7 @@ public class GUI {
 				
 				for(int i=size-1; i>=0;i--) {
 					GeneralMessage a=P.getElementAt(i);
-					if(a.getType()==GeneralMessage.TWITTER) {
+					if(a.getType()==GeneralMessage.FACEBOOK) {
 						P.removeElementAt(i);
 						}
 					}
@@ -228,6 +228,11 @@ public class GUI {
 	
 
 	public void pesquisar(String p){
+		if(p.isEmpty()) {
+			list.setModel(P);
+		}else {
+			
+		
 		search_list.clear();
 		System.out.println(p);
 		for(Object o:P.toArray()){
@@ -237,6 +242,7 @@ public class GUI {
 				}
 		}	
 		list.setModel(search_list);	
+		}
 	}
 
 	

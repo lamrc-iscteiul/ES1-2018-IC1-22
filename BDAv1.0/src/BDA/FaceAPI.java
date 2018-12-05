@@ -63,7 +63,7 @@ public class FaceAPI {
 	
 //	TODO Create the toString function for the post to show in the GUI
 	public static String postToString(Post post) {
-		String s = "";
+		String s = post.getCreatedTime().toString()+ " -João Pimenta" + System.lineSeparator()+"---------------------------------------------------------------------------------------"+ System.lineSeparator() +post.getMessage();
 		return s;
 	}
 }
