@@ -151,22 +151,39 @@ public class GUI {
 		btnResponder = new JButton("Responder");
 		btnResponder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Responder responder= new Responder();
 				int size= P.getSize();
 				
+				loop:
 				for(int i=size-1; i>=0;i--) {
 					GeneralMessage a=P.getElementAt(i);
 					if(a.toString().equals(list.getSelectedValue().toString())) {
-						responder.setTextDe(Configuracoes.getText_email_user());
-						responder.setTextPara(a.toString());
-						try {
-							responder.setTextAssunto("RE: "+a.getMessage().getSubject());
-						} catch (MessagingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						Responder responder= new Responder(a.getType());
+						switch(a.getType()) {
+						
+						case GeneralMessage.EMAIL:
+							responder.setTextDe(Configuracoes.getText_email_user());
+							responder.setTextPara(a.toString());
+							try {
+								responder.setTextAssunto("RE: "+a.getMessage().getSubject());
+							} catch (MessagingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							break;
+						
+						case GeneralMessage.TWITTER:
+							responder.setTextDe("@" + tweet.getUserName());
+							responder.setTextPara("@" + a.getStatus().getUser().getScreenName());
+							responder.setHandler(tweet);
+							responder.setMessage(a.getStatus());
+							tweet.reply(a.getStatus(), responder.getText());
+							break;
+						default:
+							System.out.println("Message type not supported!");
 						}
-						}
+						break loop;
 					}
+				}
 			}
 		});
 		btnResponder.setBounds(21, 532, 141, 35);
@@ -279,7 +296,7 @@ public void mudaRespostas(ArrayList<GeneralMessage> M) {
 			if(list.getSelectedValue()!=null) {
 			if(list.getSelectedValue().getType()==GeneralMessage.TWITTER) {
 				btnComentar.setEnabled(false);
-				btnResponder.setEnabled(false);
+				btnResponder.setEnabled(true);
 				btnRetweetar.setEnabled(true);
 			}
 			if(list.getSelectedValue().getType()==GeneralMessage.FACEBOOK) {
