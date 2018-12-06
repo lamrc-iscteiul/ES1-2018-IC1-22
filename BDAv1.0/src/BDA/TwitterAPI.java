@@ -180,6 +180,14 @@ public class TwitterAPI {
 			e.printStackTrace();
 		}
 	}
+	public void tweetar(String text) {
+		try {
+	        Status tweet = twitter.updateStatus(text);
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public void favorite(Status status) {
 		try {

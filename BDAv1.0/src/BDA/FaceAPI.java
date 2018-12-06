@@ -3,9 +3,11 @@ import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.FacebookClient.AccessToken;
+import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.types.*;
-
+import com.restfb.types.Likes.LikeItem;
+import com.restfb.types.Payment.Action;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -20,7 +22,10 @@ import javax.xml.bind.Unmarshaller;
 
 public class FaceAPI {
 	
-	public static ArrayList<GeneralMessage> getList() {
+	FacebookClient fbClient;
+	
+	final String groupID ="me/feed";
+	public  ArrayList<GeneralMessage> getList() {
 		// TODO Auto-generated method stub
 		configXML configXML = null;
 		
@@ -37,33 +42,41 @@ public class FaceAPI {
 		
 		String accessToken = configXML.getFacebook().getAccessToken();
 		
-		FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_11);
-		
-		@SuppressWarnings("unused")
-		User me = fbClient.fetchObject("me", User.class);
-		
-		Connection<Post> result = fbClient.fetchConnection("me/feed",Post.class);
+		// fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_11);
+		 fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
 		ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
+		@SuppressWarnings("unused")
+		User me = fbClient.fetchObject(groupID, User.class);
+		Connection<Post> result = fbClient.fetchConnection(groupID,Post.class);
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
 			GeneralMessage msg = new GeneralMessage(GeneralMessage.FACEBOOK, aPost);
 				if(aPost.getMessage() != null){
-//					msg.setBody(aPost.getMessage());
-//					msg.setData(aPost.getCreatedTime().toString());
-//					msg.setSource("@João Pimenta");
-//					msg.setType(GeneralMessage.FACEBOOK);
 					list.add(msg);
 				}
 			}
-			
 		}
-		System.out.println("termieni");
 		return list;
 	}
 	
 //	TODO Create the toString function for the post to show in the GUI
 	public static String postToString(Post post) {
-		String s = post.getCreatedTime().toString()+ " -João Pimenta" + System.lineSeparator()+"---------------------------------------------------------------------------------------"+ System.lineSeparator() +post.getMessage();
+		String s = post.getCreatedTime()+ " - ES-2018" + System.lineSeparator()+"---------------------------------------------------------------------------------------"+ System.lineSeparator()+post.getMessage();
 		return s;
 	}
+	public void novoPost(String S){
+		GraphResponse publishMessageResponse = fbClient.publish(groupID,GraphResponse.class,Parameter.with("message", S));
+	}
+	
+	
+	public void comenta(Post post,String s) {
+		String destpath= "/" + post.getId() + "/comments";
+		Comment commented = fbClient.publish(destpath, Comment.class, Parameter.with("message", s));
+	}
+	
+	public void like (Post post){
+		String destpath= "/" + post.getId() + "/likes";
+		LikeItem like=fbClient.publish(destpath, LikeItem.class);
+	}
+
 }
