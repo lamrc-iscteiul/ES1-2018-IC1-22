@@ -176,7 +176,7 @@ public class GUI {
 							responder.setTextPara("@" + a.getStatus().getUser().getScreenName());
 							responder.setHandler(tweet);
 							responder.setMessage(a.getStatus());
-							tweet.reply(a.getStatus(), responder.getText());
+							//tweet.reply(a.getStatus(), responder.getText());
 							break;
 						default:
 							System.out.println("Message type not supported!");
@@ -192,6 +192,11 @@ public class GUI {
 		btnRetweetar = new JButton("ReTweetar");
 		btnRetweetar.setBounds(188, 532, 141, 35);
 		frame.getContentPane().add(btnRetweetar);
+		btnRetweetar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				tweet.retweet(list.getSelectedValue().getStatus());
+			}
+		});
 		
 		btnComentar = new JButton("Comentar");
 		btnComentar.setBounds(350, 532, 141, 35);
