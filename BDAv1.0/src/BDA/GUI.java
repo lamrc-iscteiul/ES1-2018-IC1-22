@@ -2,8 +2,11 @@ package BDA;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.List;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -16,6 +19,7 @@ import javax.swing.JToggleButton;
 import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.xml.bind.JAXBException;
 
 import twitter4j.Status;
 
@@ -74,6 +78,7 @@ public GUI() {
 /**
  * Initialize the contents of the frame.
  */
+@SuppressWarnings("unchecked")
 private void initialize() {
 	tweet = new TwitterAPI();
 	mail = new EmailAPI();
@@ -285,24 +290,33 @@ private void initialize() {
 			btnResponder.setEnabled(false);
 			tglbtnLike.setEnabled(false);
 			
-			JLabel lblOrdenar = new JLabel("Ordem:");
-			lblOrdenar.setBounds(858, 188, 92, 26);
-			frame.getContentPane().add(lblOrdenar);
+			JLabel lblCritrio = new JLabel("Crit\u00E9rio:");
+			lblCritrio.setBounds(858, 188, 92, 26);
+			frame.getContentPane().add(lblCritrio);
 			
-			JComboBox<String> comboBox = new JComboBox();
-			comboBox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if(comboBox.getSelectedItem().equals("Crescente")) {
-					//codigo	
-					}else {
-						//codigo
+			JComboBox comboBox_1 = new JComboBox();
+			comboBox_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					String s = comboBox_1.getSelectedItem().toString();
+					
+					switch(s) {
+					case "Data":
+						ordenarDate();
+						break;
+					case "Alfabética":
+						ordenarString();
+						break;
+					case "Tipo":
+						ordenarType();
+						break;
 					}
-				}
+					}
 			});
-			comboBox.setBounds(858, 220, 119, 32);
-			frame.getContentPane().add(comboBox);
-			comboBox.addItem("Crescente");
-			comboBox.addItem("Decrescente");
+			comboBox_1.setBounds(858, 218, 119, 32);
+			frame.getContentPane().add(comboBox_1);
+			comboBox_1.addItem("Data");
+			comboBox_1.addItem("Tipo");
+			comboBox_1.addItem("Alfabética");
 	}
 	
 
@@ -552,6 +566,7 @@ public void responderMail(String de, String para, String ass) {
 	reply_text.setBounds(21, 156, 382, 196);
 	frame.getContentPane().add(reply_text);
 	
+	
 	JButton btnEnviar = new JButton("Enviar");
 	btnEnviar.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -572,4 +587,52 @@ public void responderMail(String de, String para, String ass) {
 	frame.getContentPane().add(lblAssunto);
 	
 }
+
+private void ordenarString() {
+	ArrayList<GeneralMessage> l = new ArrayList<GeneralMessage>();
+	int aux = P.getSize();
+	for(int i=0; i<aux;i++) {
+		GeneralMessage s = P.getElementAt(i);
+		l.add(s);
+	}
+	Collections.sort(l, GeneralMessage.ComparadorString);
+	P.clear();
+	for(int i=0; i<aux;i++) {
+	GeneralMessage s=l.get(i);
+	P.addElement(s);
+	}
+}
+
+
+private void ordenarDate() {
+	ArrayList<GeneralMessage> l = new ArrayList<GeneralMessage>();
+	int aux = P.getSize();
+	for(int i=0; i<aux;i++) {
+		GeneralMessage s = P.getElementAt(i);
+		l.add(s);
+	}
+	Collections.sort(l, GeneralMessage.ComparadorDate);
+	Collections.reverse(l);
+	P.clear();
+	for(int i=0; i<aux;i++) {
+	GeneralMessage s=l.get(i);
+	P.addElement(s);
+	}
+}
+
+private void ordenarType() {
+	ArrayList<GeneralMessage> l = new ArrayList<GeneralMessage>();
+	int aux = P.getSize();
+	for(int i=0; i<aux;i++) {
+		GeneralMessage s = P.getElementAt(i);
+		l.add(s);
+	}
+	Collections.sort(l);
+	P.clear();
+	for(int i=0; i<aux;i++) {
+	GeneralMessage s=l.get(i);
+	P.addElement(s);
+	}
+}
+
 }

@@ -11,6 +11,8 @@ public class configXML {
 	private Facebook facebook;
 	@XmlElement
 	private Twitter twitter;
+	@XmlElement
+	private String criterio;
 	
 	configXML(){
 		email=new Email();
@@ -54,5 +56,13 @@ public class configXML {
 	
 	public Twitter getTwitter() {
 		return twitter;
+	}
+
+	public String getCriterio() {
+		return criterio;
+	}
+
+	public void setCriterios(String criterio) {
+		this.criterio = criterio;
 	}
 }
