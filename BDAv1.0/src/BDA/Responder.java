@@ -105,8 +105,10 @@ public class Responder {
 					break;
 					
 				case GeneralMessage.TWITTER:
+					Status status = (Status) message;
 					TwitterAPI twitter = (TwitterAPI) handler;
-					twitter.reply((Status)message, reply_text.getText());
+					System.out.println("Reply to status: " + status.getId());
+					twitter.reply(status, reply_text.getText());
 					break;
 				}
 				frame.dispose();

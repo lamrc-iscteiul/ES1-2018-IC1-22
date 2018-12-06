@@ -175,11 +175,7 @@ public class TwitterAPI {
 	
 	public void reply(Status status, String reply_text) {
 		try {
-			long reply_id = status.getInReplyToStatusId();
-			
-			StatusUpdate reply = new StatusUpdate(reply_text);
-			reply.setInReplyToStatusId(reply_id);
-			twitter.updateStatus(reply);
+	        Status reply = twitter.updateStatus(new StatusUpdate(" @" + status.getUser().getScreenName() + " "+ reply_text).inReplyToStatusId(status.getId()));
 		} catch (TwitterException e) {
 			e.printStackTrace();
 		}
