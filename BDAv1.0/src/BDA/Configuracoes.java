@@ -36,6 +36,17 @@ public class Configuracoes {
 	private static JTextField text_facebook_accesstoken;
 	private configXML configXML;
 	private static Configuracoes window;
+	private static JCheckBox chckbxh;
+	private static JCheckBox chckbxh_1;
+	private static JCheckBox chckbxDias;
+	private static JCheckBox chckbxIscteiul;
+	private static JCheckBox chckbxBiblioteca;
+	private static JCheckBox chckbxElearning;
+	private static JCheckBox chckbxReitora;
+	private static JCheckBox chckbxFenix;
+	private static JCheckBox chckbxTesouraria;
+	private static JCheckBox chckbxTudo;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -258,25 +269,70 @@ public class Configuracoes {
 		lblFiltros.setBounds(21, 21, 92, 26);
 		panel_3.add(lblFiltros);
 		
-		JCheckBox chckbxh = new JCheckBox("24h");
+		chckbxh = new JCheckBox("24h");
 		chckbxh.setBounds(21, 54, 73, 35);
 		panel_3.add(chckbxh);
 		
-		JCheckBox chckbxh_1 = new JCheckBox("48h");
+		chckbxh_1 = new JCheckBox("48h");
 		chckbxh_1.setBounds(107, 54, 73, 35);
 		panel_3.add(chckbxh_1);
 		
-		JCheckBox chckbxDias = new JCheckBox("7 dias");
+		chckbxDias = new JCheckBox("7 dias");
 		chckbxDias.setBounds(21, 102, 179, 35);
 		panel_3.add(chckbxDias);
 		
-		JLabel lblContas = new JLabel("Contas");
-		lblContas.setBounds(238, 21, 92, 26);
+		JLabel lblContas = new JLabel("Contas (Twitter)");
+		lblContas.setBounds(238, 21, 157, 26);
 		panel_3.add(lblContas);
 		
-		JCheckBox chckbxIscteiul = new JCheckBox("ISCTE-IUL");
+		chckbxIscteiul = new JCheckBox("ISCTE-IUL");
 		chckbxIscteiul.setBounds(248, 54, 179, 35);
 		panel_3.add(chckbxIscteiul);
+		
+		chckbxBiblioteca = new JCheckBox("Biblioteca");
+		chckbxBiblioteca.setBounds(248, 102, 179, 35);
+		panel_3.add(chckbxBiblioteca);
+		
+		JLabel lblDeemail = new JLabel("De (E-Mail)");
+		lblDeemail.setBounds(21, 167, 129, 26);
+		panel_3.add(lblDeemail);
+		
+		chckbxElearning = new JCheckBox("E-Learning");
+		chckbxElearning.setBounds(21, 208, 179, 35);
+		panel_3.add(chckbxElearning);
+		
+		chckbxTesouraria = new JCheckBox("Tesouraria");
+		chckbxTesouraria.setBounds(21, 256, 179, 35);
+		panel_3.add(chckbxTesouraria);
+		
+		chckbxReitora = new JCheckBox("Reitora");
+		chckbxReitora.setBounds(248, 208, 179, 35);
+		panel_3.add(chckbxReitora);
+		
+		chckbxFenix = new JCheckBox("Fenix");
+		chckbxFenix.setBounds(248, 256, 179, 35);
+		panel_3.add(chckbxFenix);
+		
+		chckbxTudo = new JCheckBox("Tudo");
+		chckbxTudo.setBounds(248, 304, 179, 35);
+		panel_3.add(chckbxTudo);
+		
+		JButton btnSalvar_1 = new JButton("Salvar");
+		btnSalvar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				configXML.setFiltros(chckbxh.isSelected(), chckbxh_1.isSelected(), chckbxDias.isSelected(), chckbxIscteiul.isSelected(), chckbxBiblioteca.isSelected(), chckbxElearning.isSelected(),chckbxReitora.isSelected(), chckbxFenix.isSelected(), chckbxTesouraria.isSelected(),chckbxTudo.isSelected());
+				try {
+					guardarXML();
+				} catch (JAXBException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			}
+		});
+		btnSalvar_1.setBounds(173, 363, 141, 35);
+		panel_3.add(btnSalvar_1);
 	
 		//escreve no GUI o que está no XML
 		try {
@@ -304,6 +360,18 @@ public class Configuracoes {
 		text_twitter_consumersecret.setText(configXML.getTwitter().getConsumerKeySecret());
 		text_twitter_accesstoken.setText(configXML.getTwitter().getAccessToken());
 		text_twitter_accesstokensecret.setText(configXML.getTwitter().getAccessTokenSecret());
+		//Filtros
+		chckbxh.setSelected(configXML.getFiltros().getChckbxh());
+		chckbxh_1.setSelected(configXML.getFiltros().getChckbxh_1());
+		chckbxDias.setSelected(configXML.getFiltros().getChckbxDias());
+		chckbxIscteiul.setSelected(configXML.getFiltros().getChckbxIscteiul());
+		chckbxBiblioteca.setSelected(configXML.getFiltros().getChckbxBiblioteca());
+		chckbxElearning.setSelected(configXML.getFiltros().getChckbxElearning());
+		chckbxReitora.setSelected(configXML.getFiltros().getChckbxReitora());
+		chckbxFenix.setSelected(configXML.getFiltros().getChckbxFenix());
+		chckbxTesouraria.setSelected(configXML.getFiltros().getChckbxTesouraria());
+		chckbxTudo.setSelected(configXML.getFiltros().getChckbxTudo());
+		
 	}
 	
 	public void guardarXML() throws JAXBException {
@@ -329,5 +397,4 @@ public class Configuracoes {
 	public static void visible(boolean a) {
 		window.configFrame.setVisible(a);
 	}
-	
 }

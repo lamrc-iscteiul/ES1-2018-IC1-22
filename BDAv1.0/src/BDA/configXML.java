@@ -12,18 +12,20 @@ public class configXML {
 	@XmlElement
 	private Twitter twitter;
 	@XmlElement
-	private String criterio;
+	private Filtros filtros;
 	
 	configXML(){
 		email=new Email();
 		facebook=new Facebook();
 		twitter =new Twitter();
+		filtros=new Filtros();
 	};
 	
-	configXML(Email email, Facebook facebook, Twitter twitter){
+	configXML(Email email, Facebook facebook, Twitter twitter, Filtros filtros){
 		this.email=email;
 		this.facebook=facebook;
 		this.twitter=twitter;
+		this.filtros=filtros;
 	}
 	
 	public void setEmail(String email, String password) {
@@ -46,6 +48,19 @@ public class configXML {
 		this.facebook.setAccessToken(accessToken);
 	}
 	
+	public void setFiltros(boolean a,boolean b,boolean c,boolean d,boolean e,boolean f,boolean g,boolean h,boolean i,boolean j){
+    	this.filtros.setChckbxh(a);
+    	this.filtros.setChckbxh_1(b);
+    	this.filtros.setChckbxDias(c);
+    	this.filtros.setChckbxIscteiul(d);
+    	this.filtros.setChckbxBiblioteca(e);
+    	this.filtros.setChckbxElearning(f);
+    	this.filtros.setChckbxReitora(g);
+    	this.filtros.setChckbxFenix(h);
+    	this.filtros.setChckbxTesouraria(i);
+    	this.filtros.setChckbxTudo(j);
+	}
+	
 	public Email getEmail() {
 		return email;
 	}
@@ -58,11 +73,8 @@ public class configXML {
 		return twitter;
 	}
 
-	public String getCriterio() {
-		return criterio;
+	public Filtros getFiltros() {
+		return filtros;
 	}
-
-	public void setCriterios(String criterio) {
-		this.criterio = criterio;
-	}
+	
 }

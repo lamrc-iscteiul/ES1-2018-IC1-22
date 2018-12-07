@@ -17,4 +17,16 @@
         <twitterpass>a</twitterpass>
         <username>a</username>
     </twitter>
+    <filtros>
+        <chckbxBiblioteca>false</chckbxBiblioteca>
+        <chckbxDias>false</chckbxDias>
+        <chckbxElearning>true</chckbxElearning>
+        <chckbxFenix>false</chckbxFenix>
+        <chckbxIscteiul>false</chckbxIscteiul>
+        <chckbxReitora>false</chckbxReitora>
+        <chckbxTesouraria>false</chckbxTesouraria>
+        <chckbxTudo>false</chckbxTudo>
+        <chckbxh>false</chckbxh>
+        <chckbxh_1>false</chckbxh_1>
+    </filtros>
 </configXML>
