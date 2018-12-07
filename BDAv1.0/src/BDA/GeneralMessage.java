@@ -21,6 +21,10 @@ public class GeneralMessage implements Comparable<GeneralMessage>{
 	private Post facebook_post;
 	private Date data;
 	
+	/**
+	 *Creates a General Message Object and saves the type of object and the object creation Data.
+	 */
+	
 	public GeneralMessage(int type, Object obj, Date data) {
 		this.type = type;
 		this.data=data;
@@ -43,21 +47,41 @@ public class GeneralMessage implements Comparable<GeneralMessage>{
 		}
 	}
 	
+	/**
+	 *Getters of the class attributes.
+	 */
 	public int getType() {
 		return type;
 	}
-	
+	 /**
+		 *Getters and setters of the class attributes.
+		 */
 	public Message getMessage() {
 		return mail_message;
 	}
-
+	 /**
+		 *Getters and setters of the class attributes.
+		 */
 	public Status getStatus() {
 		return twitter_status;
 	}
-
+	 /**
+		 *Getters and setters of the class attributes.
+		 */
 	public Post getPost() {
 		return facebook_post;
 	}
+	 /**
+		 *Getters and setters of the class attributes.
+		 */
+	public  Date getDate(){
+		return this.data;
+	}
+	
+	
+	/**
+	 *Creates a String with the basic information of the Objectj.
+	 */
 	
 	@Override
 	public String toString() {
@@ -90,6 +114,10 @@ public class GeneralMessage implements Comparable<GeneralMessage>{
 		return s;
 	}
 	
+	/**
+	 *String comparator to sort the list of object, based on the alphabetical order.
+	 */
+	
 	public static Comparator<GeneralMessage> ComparadorString = new Comparator<GeneralMessage>(){
 	    @Override
 	    public int compare(GeneralMessage o1, GeneralMessage o2) {
@@ -98,7 +126,9 @@ public class GeneralMessage implements Comparable<GeneralMessage>{
 	    }
 	};
 	
-	
+	/**
+	 *Date comparator to sort the list of object, based on the Date.
+	 */
 
 	@Override
 	public int compareTo(GeneralMessage arg0) {
@@ -106,9 +136,6 @@ public class GeneralMessage implements Comparable<GeneralMessage>{
 		return this.getDate().compareTo(arg0.getDate());
 	}
 	
-	public  Date getDate(){
-		return this.data;
-	}
 	
 	
 }

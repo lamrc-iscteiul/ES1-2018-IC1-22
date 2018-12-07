@@ -301,7 +301,10 @@ public class Configuracoes {
 		}
 		
 	}
-	
+	/**
+	 * Read the .XML file and writes the information gathered into the GUI
+	 * @throws JAXBException
+	 */
 	private void XMLtoGUI() throws JAXBException {
 		lerXML();
 		//email
@@ -325,7 +328,10 @@ public class Configuracoes {
 		chckbxTudo.setSelected(configXML.getFiltros().getChckbxTudo());
 		
 	}
-	
+	/**
+	 * Saves the information into de .XML file
+	 * @throws JAXBException
+	 */
 	public void guardarXML() throws JAXBException {
 		File file = new File("config.xml");
         JAXBContext jaxbContext = JAXBContext.newInstance(configXML.class);
@@ -334,7 +340,10 @@ public class Configuracoes {
         jaxbMarshaller.marshal(configXML, file);
         jaxbMarshaller.marshal(configXML, System.out);
 	}
-	
+	/**
+	 * Gets the information from the .XML file
+	 * @throws JAXBException
+	 */
 	public void lerXML() throws JAXBException {
 		File file = new File("config.xml");
         JAXBContext jaxbContext = JAXBContext.newInstance(configXML.class);
@@ -342,14 +351,27 @@ public class Configuracoes {
         configXML = (configXML) unmarshaller.unmarshal(file);
 	}
 	
+	
+	/**
+	 * Gets email user
+	 * @return String
+	 */
 	public static String getText_email_user() {
 		return text_email_user.getText();
 	}
 	
+	/**
+	 * Sets configuration frame do visible or not visible
+	 * @param a Boolean
+	 */
 	public static void visible(boolean a) {
 		window.configFrame.setVisible(a);
 	}
 	
+	/**
+	 * Returns the configXML object
+	 * @return configXML
+	 */
 	public static configXML getconf() {
 		return configXML;
 	}
