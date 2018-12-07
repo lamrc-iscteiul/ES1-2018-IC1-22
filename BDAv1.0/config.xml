@@ -21,7 +21,7 @@
         <chckbxIscteiul>true</chckbxIscteiul>
         <chckbxReitora>false</chckbxReitora>
         <chckbxTesouraria>false</chckbxTesouraria>
-        <chckbxTudo>false</chckbxTudo>
+        <chckbxTudo>true</chckbxTudo>
         <chckbxh>false</chckbxh>
         <chckbxh_1>false</chckbxh_1>
     </filtros>

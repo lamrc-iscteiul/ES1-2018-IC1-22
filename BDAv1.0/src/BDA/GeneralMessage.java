@@ -1,4 +1,5 @@
 package BDA;
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -9,7 +10,7 @@ import com.restfb.types.Post;
 
 import twitter4j.Status;
 
-public class GeneralMessage implements Comparable<GeneralMessage>{
+public class GeneralMessage implements Comparable<GeneralMessage>, Serializable{
 
 	public final static int TWITTER  = 0;
 	public final static int EMAIL    = 1;
