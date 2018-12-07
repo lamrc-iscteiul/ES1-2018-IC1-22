@@ -887,4 +887,8 @@ public class GUI {
 	        return false;
 	    }
 	}
+	
+	public Configuracoes getConfigPage() {
+		return config_page;
+	}
 }

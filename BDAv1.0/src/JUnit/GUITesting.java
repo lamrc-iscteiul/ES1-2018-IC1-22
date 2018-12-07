@@ -75,7 +75,7 @@ public class GUITesting {
 		GUI gui= new GUI();
 		TwitterAPI tt= new TwitterAPI();
 		ArrayList<GeneralMessage> output=tt.getList("@22iscte");
-		Configuracoes.getConfigs().setFiltros(true, false, false, false, false, false, false, false, false, false);
+		gui.getConfigPage().getConfigs().setFiltros(true, false, false, false, false, false, false, false, false, false);
 		gui.applyFilters(output);
 	
 	
@@ -85,13 +85,13 @@ public class GUITesting {
 		GUI gui= new GUI();
 		EmailAPI e= new EmailAPI();
 		ArrayList<GeneralMessage> output=e.getList();
-		Configuracoes.getConfigs().setFiltros(true, false, false, false, false, false, false, false, false, false);
+		gui.getConfigPage().getConfigs().setFiltros(true, false, false, false, false, false, false, false, false, false);
 		gui.applyFilters(output);
 	
 	
 	}
 	
-	}
+}
 	
 	
 
