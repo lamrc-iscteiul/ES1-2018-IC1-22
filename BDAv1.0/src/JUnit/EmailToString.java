@@ -17,6 +17,7 @@ public class EmailToString {
 	public void test() throws MessagingException, IOException {
 		EmailAPI e= new EmailAPI();
 		Message msgs[] = e.getFolder().getMessages();
+		@SuppressWarnings("static-access")
 		String output=e.messageToString(msgs[0]);
 		assertEquals(false,output.isEmpty());
 	}

@@ -10,7 +10,7 @@ import com.restfb.types.Post;
 
 import BDA.GeneralMessage;
 import BDA.TwitterAPI;
-import twitter4j.Status;
+
 import twitter4j.TwitterException;
 
 public class GeneralMessageToStringTest {

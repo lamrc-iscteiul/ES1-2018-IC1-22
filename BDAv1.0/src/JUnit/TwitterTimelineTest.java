@@ -18,6 +18,7 @@ public class TwitterTimelineTest {
 		List<Status> statuses = tt.getTimeline("@22iscte");
 		tt.retweet(statuses.get(1));
 		tt.favorite(statuses.get(1));
+		@SuppressWarnings("static-access")
 		String output=tt.getTimelineText(statuses);
 		tt.tweetar("ola");
 		tt.reply(statuses.get(1), "there are only 2 genders");
