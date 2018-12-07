@@ -48,7 +48,7 @@ public class FaceAPI {
 		Connection<Post> result = fbClient.fetchConnection(groupID,Post.class);
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
-			GeneralMessage msg = new GeneralMessage(GeneralMessage.FACEBOOK, aPost);
+			GeneralMessage msg = new GeneralMessage(GeneralMessage.FACEBOOK, aPost,aPost.getCreatedTime());
 				if(aPost.getMessage() != null){
 					list.add(msg);
 				}

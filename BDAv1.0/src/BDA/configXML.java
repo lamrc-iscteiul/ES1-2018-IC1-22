@@ -27,12 +27,22 @@ public class configXML {
 		this.twitter=twitter;
 		this.filtros=filtros;
 	}
-	
+	/**
+	 * Sets email credentials in the object Email
+	 * @param email String
+	 * @param password String
+	 */
 	public void setEmail(String email, String password) {
 		this.email.setEmail(email);
 		this.email.setPassword(password);
 	}
-	
+	/**
+	 * Sets token credentials in the object Twitter
+	 * @param consumerKey
+	 * @param consumerKeySecret
+	 * @param accessToken
+	 * @param accessTokenSecret
+	 */
 	public void setTwitter(String consumerKey, String consumerKeySecret, String accessToken, String accessTokenSecret){
 		this.twitter.setConsumerKey(consumerKey);
 		this.twitter.setConsumerKeySecret(consumerKeySecret);

@@ -35,23 +35,19 @@ public class GUI {
 
 	private JFrame frame;
 	private JTextField textField;
-	JList<GeneralMessage> list = new JList<>();
-	JTextArea txtrArea = new JTextArea();
-	DefaultListModel<GeneralMessage> P = new DefaultListModel<GeneralMessage>();
-	ListSelectionListener lsl;
-	FaceAPI face;
-	TwitterAPI tweet;
-	EmailAPI mail;
-	public ListSelectionListener getLsl() {
-		return lsl;
-	}
+	private JList<GeneralMessage> list = new JList<>();
+	private JTextArea txtrArea = new JTextArea();
+	private DefaultListModel<GeneralMessage> P = new DefaultListModel<GeneralMessage>();
+	private ListSelectionListener lsl;
+	private FaceAPI face;
+	private TwitterAPI tweet;
+	private EmailAPI mail;
+	private DefaultListModel<GeneralMessage> search_list = new DefaultListModel<GeneralMessage>();
+	private JButton btnRetweetar;
+	private JButton btnComentar;
+	private JButton btnResponder;
+	private JButton tglbtnLike;
 
-	DefaultListModel<GeneralMessage> search_list = new DefaultListModel<GeneralMessage>();
-	JButton btnRetweetar;
-	JButton btnComentar;
-	JButton btnResponder;
-	JButton tglbtnLike;
-	//Configuracoes configuracoes= new Configuracoes();
 /**
  * Launch the application.
  */
@@ -84,6 +80,9 @@ private void initialize() {
 	mail = new EmailAPI();
 	face = new FaceAPI();
 	Configuracoes.init();
+	configXML c = Configuracoes.getconf();
+	System.out.println(c.getFiltros().getChckbxElearning());
+	
 	frame = new JFrame();
 	frame.setTitle("BDA Project");
 	frame.setBounds(100, 100, 1024, 710);
@@ -306,20 +305,19 @@ private void initialize() {
 					case "Alfabética":
 						ordenarString();
 						break;
-					case "Tipo":
-						ordenarType();
-						break;
 					}
 					}
 			});
 			comboBox_1.setBounds(858, 218, 119, 32);
 			frame.getContentPane().add(comboBox_1);
 			comboBox_1.addItem("Data");
-			comboBox_1.addItem("Tipo");
 			comboBox_1.addItem("Alfabética");
 	}
 	
-
+/**
+ * Given a String, represents on the GUI the GeneralMessages correspondent to that given String
+ * @param p String
+ */
 	public void pesquisar(String p){
 		if(p.isEmpty()) {
 			list.setModel(P);
@@ -338,7 +336,10 @@ private void initialize() {
 		}
 	}
 
-	
+/**
+ * Given a ArrayList<GeneralMessage>, writes on the GUI 
+ * @param M ArrayList<GeneralMessage>
+ */
 public void mudaRespostas(ArrayList<GeneralMessage> M) {
 lsl = new ListSelectionListener() {
 
@@ -406,16 +407,29 @@ lsl = new ListSelectionListener() {
 		}
 }
 
+
+/**
+ * Returns GUI frame
+ * @return frame
+ */
 		public Component getFrame() {
 	// TODO Auto-generated method stub
 	return frame;
 }
 
+		
+/**
+ * Returns JList of GeneralMessage 
+ * @return JList
+ */
 		public JList<GeneralMessage> getList() {
 	// TODO Auto-generated method stub
 	return list;
 }
 
+/**
+ * Opens a frame where a new Facebook post can be made
+ */
 		public void novoPost() {
 	JFrame newPost = new JFrame();
 	newPost.setResizable(false);
@@ -443,6 +457,9 @@ JButton btnPublicar = new JButton("Publicar");
 	newPost.getContentPane().add(btnPublicar);
 }
 
+/**
+ * Opens a new frame in order to submit a new Facebook comment
+ */
 		public void comentaFacebook() {
 	JFrame newComment = new JFrame();
 	newComment.setResizable(false);
@@ -469,7 +486,9 @@ JButton btnPublicar = new JButton("Publicar");
 	btnPublicar.setBounds(282, 273, 141, 35);
 	newComment.getContentPane().add(btnPublicar);
 }
-
+/**
+ * Opens a new frame in order to submit a new Twitter comment
+ */
 		public void comentaTwitter() {
 	JFrame newCommentTwitter = new JFrame();
 	newCommentTwitter.setResizable(false);
@@ -497,7 +516,9 @@ JButton btnPublicar = new JButton("Publicar");
 	newCommentTwitter.getContentPane().add(btnPublicar);
 }
 
-
+/**
+ * Opens a frame where a new Tweet can be made
+ */
 		public void novoTweet() {
 	JFrame newTweet = new JFrame();
 	newTweet.setResizable(false);
@@ -524,6 +545,13 @@ JButton btnPublicar = new JButton("Tweetar");
 	btnPublicar.setBounds(282, 273, 141, 35);
 	newTweet.getContentPane().add(btnPublicar);
 }
+		
+/**
+ * Opens a frame where a reply to a e-mail can be made
+ * @param de String
+ * @param para String
+ * @param ass String
+ */
 
 public void responderMail(String de, String para, String ass) {
 	JTextField textDe = new JTextField();
@@ -611,7 +639,7 @@ private void ordenarDate() {
 		GeneralMessage s = P.getElementAt(i);
 		l.add(s);
 	}
-	Collections.sort(l, GeneralMessage.ComparadorDate);
+	Collections.sort(l);
 	Collections.reverse(l);
 	P.clear();
 	for(int i=0; i<aux;i++) {
@@ -620,19 +648,15 @@ private void ordenarDate() {
 	}
 }
 
-private void ordenarType() {
-	ArrayList<GeneralMessage> l = new ArrayList<GeneralMessage>();
-	int aux = P.getSize();
-	for(int i=0; i<aux;i++) {
-		GeneralMessage s = P.getElementAt(i);
-		l.add(s);
-	}
-	Collections.sort(l);
-	P.clear();
-	for(int i=0; i<aux;i++) {
-	GeneralMessage s=l.get(i);
-	P.addElement(s);
-	}
+
+
+
+/**
+ * Gets a ListSelectionListener
+ * @return ListSelectionListener
+ */
+public ListSelectionListener getLsl() {
+	return lsl;
 }
 
 }

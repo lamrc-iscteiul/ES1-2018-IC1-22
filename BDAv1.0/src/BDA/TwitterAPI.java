@@ -77,7 +77,7 @@ public class TwitterAPI {
 		try {
 			List<Status> statuses = getTimeline(user);
 			for(Status status : statuses) {
-				GeneralMessage msg = new GeneralMessage(GeneralMessage.TWITTER, status);
+				GeneralMessage msg = new GeneralMessage(GeneralMessage.TWITTER, status,status.getCreatedAt());
 				list.add(msg);
 			}
 		} catch (TwitterException e) {

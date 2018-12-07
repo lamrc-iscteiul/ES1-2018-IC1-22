@@ -126,7 +126,7 @@ public class EmailAPI {
          int max2 = 5;
          for(int i = 0; i < max2; i++){
         	 Message message = msgs[msgs.length - (i + 1)];
-        	 GeneralMessage general_message = new GeneralMessage(GeneralMessage.EMAIL, message);
+        	 GeneralMessage general_message = new GeneralMessage(GeneralMessage.EMAIL, message,message.getSentDate());
         	 messages.add(general_message);
          }
     }
