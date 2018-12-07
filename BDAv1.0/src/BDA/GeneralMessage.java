@@ -20,9 +20,15 @@ public class GeneralMessage implements Comparable<GeneralMessage>{
 	private Message mail_message;
 	private Post facebook_post;
 	private boolean selected = false;
+	private Date data;
 	
-	public GeneralMessage(int type, Object obj) {
+	/**
+	 *Creates a General Message Object and saves the type of object and the object creation Data.
+	 */
+	
+	public GeneralMessage(int type, Object obj, Date data) {
 		this.type = type;
+		this.data=data;
 		switch(type) {
 		
 		case GeneralMessage.TWITTER:
@@ -42,21 +48,41 @@ public class GeneralMessage implements Comparable<GeneralMessage>{
 		}
 	}
 	
+	/**
+	 *Getters of the class attributes.
+	 */
 	public int getType() {
 		return type;
 	}
-	
+	 /**
+		 *Getters and setters of the class attributes.
+		 */
 	public Message getMessage() {
 		return mail_message;
 	}
-
+	 /**
+		 *Getters and setters of the class attributes.
+		 */
 	public Status getStatus() {
 		return twitter_status;
 	}
-
+	 /**
+		 *Getters and setters of the class attributes.
+		 */
 	public Post getPost() {
 		return facebook_post;
 	}
+	 /**
+		 *Getters and setters of the class attributes.
+		 */
+	public  Date getDate(){
+		return this.data;
+	}
+	
+	
+	/**
+	 *Creates a String with the basic information of the Objectj.
+	 */
 	
 	@Override
 	public String toString() {
@@ -89,70 +115,29 @@ public class GeneralMessage implements Comparable<GeneralMessage>{
 		return s;
 	}
 	
+	/**
+	 *String comparator to sort the list of object, based on the alphabetical order.
+	 */
+	
 	public static Comparator<GeneralMessage> ComparadorString = new Comparator<GeneralMessage>(){
 	    @Override
 	    public int compare(GeneralMessage o1, GeneralMessage o2) {
 
-	    	return o1.toString().compareTo(o2.toString());
+	    	return o1.toString().compareToIgnoreCase(o2.toString());
 	    }
 	};
 	
-	public static Comparator<GeneralMessage> ComparadorDate = new Comparator<GeneralMessage>(){
-	    @Override
-	    public int compare(GeneralMessage o1, GeneralMessage o2) {
-
-	    	int a = o1.getType();
-	    	int b = o2.getType();
-	    	Date d1=null;
-	    	Date d2=null;
-	    	
-	    	switch(a) {
-	    	case GeneralMessage.EMAIL:
-	    		try {
-					d1 = o1.getMessage().getSentDate();
-				} catch (MessagingException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-	    		break;
-	    	case GeneralMessage.FACEBOOK:
-	    		d1 = o1.getPost().getCreatedTime();
-	    		break;
-	    	case GeneralMessage.TWITTER:
-	    		d1 = o1.getStatus().getCreatedAt();
-	    		break;
-	    	}
-	    	
-	    	switch(b) {
-	    	case GeneralMessage.EMAIL:
-	    		try {
-					d2 = o1.getMessage().getSentDate();
-				} catch (MessagingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	    		break;
-	    	case GeneralMessage.FACEBOOK:
-	    		d2 = o1.getPost().getCreatedTime();
-	    		System.out.println(d2);
-	    		break;
-	    	case GeneralMessage.TWITTER:
-	    		d2 = o1.getStatus().getCreatedAt();
-	    		break;
-	    	}
-	    	
-	    	
-	    	return d1.compareTo(d2);
-	    }
-	};
+	/**
+	 *Date comparator to sort the list of object, based on the Date.
+	 */
 
 	@Override
 	public int compareTo(GeneralMessage arg0) {
 		
-		return this.getType()-arg0.getType();
+		return this.getDate().compareTo(arg0.getDate());
 	}
 
-	public Date getDate() {
+	public Date getDate2() {
 		
 		switch(type) {
 		

@@ -24,6 +24,10 @@ public class TwitterAPI {
 	private int tweet_number = 100;
 	private Twitter twitter;
 	
+	/**
+	 *Reads the AcessToken from the XML file, connects to twitter and gets the list of tweets made by the user.
+	 */
+	
 	public TwitterAPI() {
 		
 		configXML configXML = null;
@@ -54,14 +58,21 @@ public class TwitterAPI {
 		}
 	}
 	
+	/**
+	 *Getters and setters of the class attributes.
+	 */
 	public void setTweetNumber(int x) {
 		this.tweet_number = x;
 	}
-	
+	 /**
+		 *Getters and setters of the class attributes.
+		 */
 	public int getTweetNumber() {
 		return tweet_number;
 	}
-	
+	 /**
+		 *Getters and setters of the class attributes.
+		 */
 	public String getUserName() {
 		return user;
 	}
@@ -77,7 +88,7 @@ public class TwitterAPI {
 		try {
 			List<Status> statuses = getTimeline(user);
 			for(Status status : statuses) {
-				GeneralMessage msg = new GeneralMessage(GeneralMessage.TWITTER, status);
+				GeneralMessage msg = new GeneralMessage(GeneralMessage.TWITTER, status,status.getCreatedAt());
 				list.add(msg);
 			}
 		} catch (TwitterException e) {
@@ -89,35 +100,10 @@ public class TwitterAPI {
 	
 	/** Gets a user's tweets
 	 * 
-	 * @param user Desired user's usernam
+	 * @param user Desired user's username
 	 * @returns List of the user's statuses
 	 */
 	public List<Status> getTimeline(String user) throws TwitterException {
-		
-//		configXML configXML = null;
-//		//lê ficheiro XML
-//		try {
-//			File file = new File("config.xml");
-//	        JAXBContext jaxbContext = JAXBContext.newInstance(configXML.class);
-//	        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-//	        configXML = (configXML) unmarshaller.unmarshal(file);
-//		} catch (JAXBException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		Paging page = new Paging(1,TWEET_NUMBER);
-//		
-//		ConfigurationBuilder cb = new ConfigurationBuilder();
-//    	cb.setDebugEnabled(true)
-//    	  .setOAuthConsumerKey(configXML.getTwitter().getConsumerKey())
-//    	  .setOAuthConsumerSecret(configXML.getTwitter().getConsumerKeySecret())
-//    	  .setOAuthAccessToken(configXML.getTwitter().getAccessToken())
-//    	  .setOAuthAccessTokenSecret(configXML.getTwitter().getAccessTokenSecret());
-//    	TwitterFactory tf = new TwitterFactory(cb.build());
-//    	
-//    	Twitter twitter = tf.getInstance();
-		
 		Paging page = new Paging(1,tweet_number);
     	
     	List<Status> statuses = twitter.getUserTimeline(user, page);
@@ -129,16 +115,6 @@ public class TwitterAPI {
 	 * 
 	 * @param statuses The list of statuses to print
 	 */
-	public static void printTimelineConsole(List<Status> statuses) {
-		System.out.println("------------------------\n Showing home timeline \n------------------------");
- 		int counter=1;
-        for (Status status : statuses) {
-			System.out.println("@"+ status.getUser().getName() + ": " + status.getText() + "\n" +
-							   "Retweets: " + status.getRetweetCount() + "         Favorites: " + status.getFavoriteCount() + "\n" +
-							   "---------------Tweet Nº " + counter + "---------------\n");	
-			counter++;
-         }
-	}
 	
 	/**Gets tweets in a String
 	 * 
@@ -150,7 +126,6 @@ public class TwitterAPI {
 		result += "------------------------\n Showing user's timeline \n------------------------" + "\n";
  		int counter=1;
         for (Status status : statuses) {
-//        	pesquisa.add(getTweet(status));
         	result += "@"+ status.getUser().getName() + ": " + status.getText() + "\n" +
         			  "Retweets: " + status.getRetweetCount() + "         Favorites: " + status.getFavoriteCount() + "\n" +
         			  "---------------Tweet Nº " + counter + "---------------\n";
@@ -173,6 +148,10 @@ public class TwitterAPI {
 		return result;
 	}
 	
+	/**
+	 *creates a reply (reply_text) in a tweet.
+	 */
+	
 	public void reply(Status status, String reply_text) {
 		try {
 	        Status reply = twitter.updateStatus(new StatusUpdate(" @" + status.getUser().getScreenName() + " "+ reply_text).inReplyToStatusId(status.getId()));
@@ -180,6 +159,11 @@ public class TwitterAPI {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 *Creates a tweet in the user's twitter.
+	 */
+	
 	public void tweetar(String text) {
 		try {
 	        Status tweet = twitter.updateStatus(text);
@@ -188,6 +172,9 @@ public class TwitterAPI {
 		}
 	}
 	
+	/**
+	 * selects favorite on the determined post.
+	 */
 	
 	public void favorite(Status status) {
 		try {
@@ -197,6 +184,10 @@ public class TwitterAPI {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 *retweets a determined tweet (status).
+	 */
 	
 	public void retweet(Status status) {
 		try {
