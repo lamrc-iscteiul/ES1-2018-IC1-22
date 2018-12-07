@@ -1,6 +1,6 @@
 package JUnit;
 
-import static org.junit.Assert.*;
+
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;

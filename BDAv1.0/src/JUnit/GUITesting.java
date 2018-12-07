@@ -9,7 +9,7 @@ import javax.swing.event.ListSelectionEvent;
 
 import org.junit.Test;
 
-import BDA.Configuracoes;
+
 import BDA.EmailAPI;
 import BDA.GUI;
 import BDA.GeneralMessage;
