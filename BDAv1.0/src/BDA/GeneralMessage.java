@@ -19,6 +19,7 @@ public class GeneralMessage implements Comparable<GeneralMessage>{
 	private Status twitter_status;
 	private Message mail_message;
 	private Post facebook_post;
+	private boolean selected = false;
 	
 	public GeneralMessage(int type, Object obj) {
 		this.type = type;
@@ -151,7 +152,38 @@ public class GeneralMessage implements Comparable<GeneralMessage>{
 		return this.getType()-arg0.getType();
 	}
 
+	public Date getDate() {
+		
+		switch(type) {
+		
+		case TWITTER:
+			return twitter_status.getCreatedAt();
+			
+		case EMAIL:
+			try {
+				return mail_message.getSentDate();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+			
+		case FACEBOOK:
+			return facebook_post.getCreatedTime();
+		}
+		
+		return new Date();
+	}
 	
+	public void setSelected() {
+		this.selected = true;
+	}
 	
+	public void deselect() {
+		this.selected = false;
+	}
 	
+	public boolean getSelected() {
+		return selected;
+	}
 }

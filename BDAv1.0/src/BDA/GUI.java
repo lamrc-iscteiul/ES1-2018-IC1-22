@@ -6,13 +6,17 @@ import java.awt.List;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.mail.Address;
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
@@ -339,8 +343,11 @@ private void initialize() {
 	}
 
 	
-public void mudaRespostas(ArrayList<GeneralMessage> M) {
-lsl = new ListSelectionListener() {
+public void mudaRespostas(ArrayList<GeneralMessage> original_list) {
+	
+	ArrayList<GeneralMessage> M = applyFilters(original_list);
+	
+	lsl = new ListSelectionListener() {
 
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
@@ -635,4 +642,104 @@ private void ordenarType() {
 	}
 }
 
+	private ArrayList<GeneralMessage> applyFilters(ArrayList<GeneralMessage> list) {
+	
+		ArrayList<GeneralMessage> return_message = new ArrayList<GeneralMessage>();
+		
+		Filtros filtros = Configuracoes.getConfigs().getFiltros();
+		
+		if(filtros.getChckbxTudo())
+			return list;
+		
+		for(GeneralMessage m : list) {
+			if(filtros.getChckbxDias() || filtros.getChckbxh_1() || filtros.getChckbxh()) {
+				
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(new Date());
+				Date compare_date;
+				if(filtros.getChckbxDias()) {
+					calendar.add(Calendar.DATE, -7);
+					compare_date = calendar.getTime();
+					System.out.print("Comparing " + m.getDate().toString() + " with " + compare_date.toString() + "...");
+					System.out.println(m.getDate().after(compare_date));
+					if(m.getDate().after(compare_date)) {
+						m.setSelected();
+					}
+				}else if(filtros.getChckbxh_1()) {
+					calendar.add(Calendar.DATE, -2);
+					compare_date = calendar.getTime();
+					System.out.print("Comparing " + m.getDate().toString() + " with " + compare_date.toString() + "...");
+					System.out.println(m.getDate().after(compare_date));
+					if(m.getDate().after(compare_date)) {
+						m.setSelected();
+					}
+				}else {
+					calendar.add(Calendar.DATE, -1);
+					compare_date = calendar.getTime();
+					System.out.print("Comparing " + m.getDate().toString() + " with " + compare_date.toString() + "...");
+					System.out.println(m.getDate().after(compare_date));
+					if(m.getDate().after(compare_date)) {
+						m.setSelected();
+					}
+				}
+			}
+			
+			if(m.getType() == GeneralMessage.TWITTER) {
+				
+				System.out.print("Comparing " + m.getStatus().getUser().getScreenName() + " with ISCTEIUL...");
+				System.out.println(m.getStatus().getUser().getScreenName().equals("ISCTEIUL"));
+				
+				System.out.print("Comparing " + m.getStatus().getUser().getScreenName() + " with BibliotecaISCTE...");
+				System.out.println(m.getStatus().getUser().getScreenName().equals("BibliotecaISCTE"));
+				
+				if(filtros.getChckbxIscteiul() && m.getStatus().getUser().getScreenName().equals("ISCTEIUL"))
+					m.setSelected();
+				else if(filtros.getChckbxBiblioteca() && m.getStatus().getUser().getScreenName().equals("BibliotecaISCTE"))
+					m.setSelected();
+				else
+					m.deselect();
+			}
+			
+			if(m.getType() == GeneralMessage.EMAIL) {
+				try {
+					InternetAddress from = (InternetAddress) m.getMessage().getFrom()[0];
+					String add = from.getAddress();
+					String subject = m.getMessage().getSubject();
+					
+					System.out.print("Comparing " + subject + " with 2018...");
+					System.out.println(subject.startsWith("2018"));
+					
+					System.out.print("Comparing " + add + " with geapc...");
+					System.out.println(add.contains("geapq"));
+					
+					System.out.print("Comparing " + add + " with reitora...");
+					System.out.println(add.contains("reitora"));
+					
+					System.out.print("Comparing " + add + " with tesouraria...");
+					System.out.println(add.contains("tesouraria"));
+					
+					if(filtros.getChckbxElearning() && subject.startsWith("2018"))
+						m.setSelected();
+					else if(filtros.getChckbxFenix() && add.contains("geapq"))
+						m.setSelected();
+					else if(filtros.getChckbxReitora() && add.contains("reitora"))
+						m.setSelected();
+					else if(filtros.getChckbxTesouraria() && add.contains("tesouraria"))
+						m.setSelected();
+					else
+						m.deselect();
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		for(GeneralMessage m : list) {
+			if(m.getSelected())
+				return_message.add(m);
+		}
+		
+		return return_message;
+	
+	}	
 }

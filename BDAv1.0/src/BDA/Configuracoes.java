@@ -30,7 +30,7 @@ public class Configuracoes {
 	private static JTextField text_twitter_accesstoken;
 	private static JTextField text_twitter_accesstokensecret;
 	private static JTextField text_facebook_accesstoken;
-	private configXML configXML;
+	private static configXML configXML;
 	private static Configuracoes window;
 	private static JCheckBox chckbxh;
 	private static JCheckBox chckbxh_1;
@@ -348,5 +348,9 @@ public class Configuracoes {
 	
 	public static void visible(boolean a) {
 		window.configFrame.setVisible(a);
+	}
+	
+	public static configXML getConfigs() {
+		return configXML;
 	}
 }
