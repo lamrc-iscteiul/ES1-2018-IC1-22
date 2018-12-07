@@ -1,6 +1,5 @@
 package BDA;
 
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,7 +14,6 @@ import javax.mail.BodyPart;
 import javax.mail.FetchProfile;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -23,7 +21,6 @@ import javax.mail.Transport;
 import javax.mail.URLName;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.xml.bind.JAXBContext;
@@ -36,11 +33,10 @@ public class EmailAPI {
 
 	private Session session;
     private POP3SSLStore store;
-    private static String username;
-    private static String password;
+    private String username;
+    private String password;
     private POP3Folder folder;
     private ArrayList<GeneralMessage> messages = new ArrayList<GeneralMessage>();
-    private Configuracoes config;
     
     public static String numberOfFiles = null;
     public static int toCheck = 0;
@@ -48,8 +44,10 @@ public class EmailAPI {
     URLName url;
     public static String receiving_attachments="C:\\download";
 
-    public EmailAPI()
-    {
+    /*
+     * Constructor
+     */
+    public EmailAPI() {
     	try {
 	        session = null;
 	        store = null;
@@ -71,8 +69,7 @@ public class EmailAPI {
      * @param username
      * @param password
      */
-    public void setUserPass(String username, String password)
-    {
+    public void setUserPass(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -138,33 +135,6 @@ public class EmailAPI {
     public POP3Folder getFolder() {
 		return folder;
 	}
-
-//	public ArrayList<GeneralMessage> getList() {
-//    	EmailAPI mail;
-//    	ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
-//		try {
-//			
-//			//lê ficheiro XML
-//			File file = new File("config.xml");
-//	        JAXBContext jaxbContext = JAXBContext.newInstance(configXML.class);
-//	        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-//	        configXML configXML = (configXML) unmarshaller.unmarshal(file);
-//			
-//			mail = new EmailAPI();
-//	        mail.setUserPass(configXML.getEmail().getEmail(), configXML.getEmail().getPassword());
-//	        mail.connect();
-//	        mail.openFolder("INBOX");
-//	        mail.transformMessageToList();
-//	        list = mail.getMessages();
-//	        mail.disconnect();
-//	        mail.finalize();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} catch (Throwable t) {
-//			t.printStackTrace();
-//		}
-//		return list;
-//    }
     
     public ArrayList<GeneralMessage> getList() {
 		return messages;
@@ -263,62 +233,6 @@ public class EmailAPI {
         return result;
     }
 
-//    @SuppressWarnings("unused")
-//    private static void dumpEnvelope(Message m) throws Exception
-//    {
-//		String body="";
-//        String path="";
-//        int size=0;
-//        Object content = m.getContent();
-//        if(content instanceof String){
-//            body = (String)content;
-//        }
-//        else if(content instanceof Multipart)
-//        {
-//            Multipart mp = (Multipart)content;
-//            for (int j=0; j < mp.getCount(); j++)
-//            {
-//                Part part = mp.getBodyPart(j);
-//                String disposition = part.getDisposition();
-//                //System.out.println("test disposition---->>"+disposition);
-//                if (disposition == null) {
-//                    // Check if plain
-//                    MimeBodyPart mbp = (MimeBodyPart)part;
-//                    if (mbp.isMimeType("text/plain")) {
-//                        body += mbp.getContent().toString();
-//                    }
-//                    else if (mbp.isMimeType("TEXT/HTML")) {
-//                        body += mbp.getContent().toString();
-//                    }
-//                    else {
-//                        //unknown
-//                    }
-//                } else if ((disposition != null) &&
-//                        (disposition.equals(Part.ATTACHMENT) || disposition.equals
-//                        (Part.INLINE) || disposition.equals("ATTACHMENT") || disposition.equals("INLINE")) )
-//                {
-//                    // Check if plain
-//                    MimeBodyPart mbp = (MimeBodyPart)part;
-//                    if (mbp.isMimeType("text/plain")) {
-//                        body += (String)mbp.getContent();
-//                    }
-//                    else if (mbp.isMimeType("TEXT/HTML")) {
-//                        body += mbp.getContent().toString();
-//                    }
-//                    else {
-//                        File savedir = new File(receiving_attachments);
-//                        savedir.mkdirs();
-//                        File savefile = new File(savedir+"\\"+part.getFileName());
-//                        path = savefile.getAbsolutePath();
-//                        size = saveFile( savefile, part);
-//
-//                    }
-//                }
-//            }
-//        }
-//
-//    }
-
 	public String getUsername() {
 		return username;
 	}
@@ -335,7 +249,13 @@ public class EmailAPI {
 		this.password = password;
 	}
 	
-	public static void enviarMail(String de, String destino, String assunto, String texto) throws AddressException, MessagingException {
+	/*
+	 * Sends an Email.
+	 * 
+	 * @param de
+	 * 		sender
+	 */
+	public void enviarMail(String de, String destino, String assunto, String texto) throws AddressException, MessagingException {
 		Properties props = null;
 		props = new Properties();
         props.put("mail.smtp.auth", true);
@@ -352,7 +272,6 @@ public class EmailAPI {
         	                    username, password);
         	                }
         	    });
-     //   session2.setDebug(true);
 		
 		MimeMessage message = new MimeMessage(session2);
 		message.setFrom(new InternetAddress(de));

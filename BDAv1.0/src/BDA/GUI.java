@@ -48,6 +48,7 @@ public class GUI {
 
 	private JFrame frame;
 	private JTextField textField;
+	private Configuracoes config_page;
 	private JList<GeneralMessage> list;
 	private JTextArea txtrArea;
 	private DefaultListModel<GeneralMessage> model;
@@ -94,8 +95,9 @@ public class GUI {
 		tweet = new TwitterAPI();
 		mail = new EmailAPI();
 		face = new FaceAPI();
-		Configuracoes.init();
-		configXML c = Configuracoes.getConfigs();
+//		Configuracoes.init();
+		config_page = new Configuracoes();
+		configXML c = config_page.getConfigs();
 		System.out.println(c.getFiltros().getChckbxElearning());
 
 		search_list = new DefaultListModel<GeneralMessage>();
@@ -185,7 +187,7 @@ public class GUI {
 		btnResponder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					responderMail(Configuracoes.getText_email_user(), list.getSelectedValue().toString(),
+					responderMail(config_page.getText_email_user(), list.getSelectedValue().toString(),
 							"RE: " + list.getSelectedValue().getMessage().getSubject());
 				} catch (MessagingException e) {
 					// TODO Auto-generated catch block
@@ -226,7 +228,7 @@ public class GUI {
 		JButton btnConfiguraes = new JButton("Configura\u00E7\u00F5es");
 		btnConfiguraes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Configuracoes.visible(true);
+				config_page.visible(true);
 				;
 			}
 		});
@@ -365,7 +367,7 @@ public class GUI {
 			search_list.clear();
 			System.out.println(p);
 			for (Object o : model.toArray()) {
-				if (o.toString().contains(p)) {
+				if (o.toString().toLowerCase().contains(p.toLowerCase())) {
 					search_list.addElement((GeneralMessage) o);
 				}
 			}
@@ -740,47 +742,35 @@ public class GUI {
 
 		ArrayList<GeneralMessage> return_message = new ArrayList<GeneralMessage>();
 
-		Filtros filtros = Configuracoes.getConfigs().getFiltros();
+		Filtros filtros = config_page.getConfigs().getFiltros();
 
 		if (filtros.getChckbxTudo())
 			return list;
-
+		
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		Date compare_date;
+		
+		System.out.println("Check for date!");
+		if (filtros.getChckbxDias()) {
+			calendar.add(Calendar.DATE, -7);
+			compare_date = calendar.getTime();
+		} else if (filtros.getChckbxh_1()) {
+			calendar.add(Calendar.DATE, -2);
+			compare_date = calendar.getTime();
+		} else if (filtros.getChckbxh()){
+			calendar.add(Calendar.DATE, -1);
+			compare_date = calendar.getTime();
+		} else {
+			compare_date = new Date(Long.MIN_VALUE);
+		}
+		
 		for (GeneralMessage m : list) {
-			if (filtros.getChckbxDias() || filtros.getChckbxh_1() || filtros.getChckbxh()) {
 
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(new Date());
-				Date compare_date;
-				if (filtros.getChckbxDias()) {
-					calendar.add(Calendar.DATE, -7);
-					compare_date = calendar.getTime();
-					System.out
-							.print("Comparing " + m.getDate().toString() + " with " + compare_date.toString() + "...");
-					System.out.println(m.getDate().after(compare_date));
-					if (m.getDate().after(compare_date)) {
-						m.setSelected();
-					}
-				} else if (filtros.getChckbxh_1()) {
-					calendar.add(Calendar.DATE, -2);
-					compare_date = calendar.getTime();
-					System.out
-							.print("Comparing " + m.getDate().toString() + " with " + compare_date.toString() + "...");
-					System.out.println(m.getDate().after(compare_date));
-					if (m.getDate().after(compare_date)) {
-						m.setSelected();
-					}
-				} else {
-					calendar.add(Calendar.DATE, -1);
-					compare_date = calendar.getTime();
-					System.out
-							.print("Comparing " + m.getDate().toString() + " with " + compare_date.toString() + "...");
-					System.out.println(m.getDate().after(compare_date));
-					if (m.getDate().after(compare_date)) {
-						m.setSelected();
-					}
-				}
-			}
-
+			System.out.print("Comparing " + m.getDate().toString() + " with " + compare_date.toString() + "...");
+			System.out.println(m.getDate().after(compare_date));
+			
 			if (m.getType() == GeneralMessage.TWITTER) {
 
 				System.out.print("Comparing " + m.getStatus().getUser().getScreenName() + " with ISCTEIUL...");
@@ -789,10 +779,13 @@ public class GUI {
 				System.out.print("Comparing " + m.getStatus().getUser().getScreenName() + " with BibliotecaISCTE...");
 				System.out.println(m.getStatus().getUser().getScreenName().equals("BibliotecaISCTE"));
 
-				if (filtros.getChckbxIscteiul() && m.getStatus().getUser().getScreenName().equals("ISCTEIUL"))
+				if (filtros.getChckbxIscteiul() 
+						&& m.getStatus().getUser().getScreenName().equals("ISCTEIUL")
+						&& m.getDate().after(compare_date))
 					m.setSelected();
 				else if (filtros.getChckbxBiblioteca()
-						&& m.getStatus().getUser().getScreenName().equals("BibliotecaISCTE"))
+						&& m.getStatus().getUser().getScreenName().equals("BibliotecaISCTE")
+						&& m.getDate().after(compare_date))
 					m.setSelected();
 				else
 					m.deselect();
@@ -816,19 +809,27 @@ public class GUI {
 					System.out.print("Comparing " + add + " with tesouraria...");
 					System.out.println(add.contains("tesouraria"));
 
-					if (filtros.getChckbxElearning() && subject.startsWith("2018"))
+					if (filtros.getChckbxElearning() && subject.startsWith("2018")
+							&& m.getDate().after(compare_date))
 						m.setSelected();
-					else if (filtros.getChckbxFenix() && add.contains("geapq"))
+					else if (filtros.getChckbxFenix() && add.contains("geapq")
+							&& m.getDate().after(compare_date))
 						m.setSelected();
-					else if (filtros.getChckbxReitora() && add.contains("reitora"))
+					else if (filtros.getChckbxReitora() && add.contains("reitora")
+							&& m.getDate().after(compare_date))
 						m.setSelected();
-					else if (filtros.getChckbxTesouraria() && add.contains("tesouraria"))
+					else if (filtros.getChckbxTesouraria() && add.contains("tesouraria")
+							&& m.getDate().after(compare_date))
 						m.setSelected();
 					else
 						m.deselect();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+			
+			if (m.getType() == GeneralMessage.FACEBOOK && m.getDate().after(compare_date)) {
+				m.setSelected();
 			}
 		}
 
@@ -886,8 +887,4 @@ public class GUI {
 	        return false;
 	    }
 	}
-	
-	
-	
-	
 }
