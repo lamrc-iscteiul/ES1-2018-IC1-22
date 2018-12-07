@@ -33,18 +33,14 @@ public class configXML {
 		this.email.setPassword(password);
 	}
 	
-	public void setTwitter(String username, String password, String consumerKey, String consumerKeySecret, String accessToken, String accessTokenSecret){
-		this.twitter.setUsername(username);
-		this.twitter.setPassword(password);
+	public void setTwitter(String consumerKey, String consumerKeySecret, String accessToken, String accessTokenSecret){
 		this.twitter.setConsumerKey(consumerKey);
 		this.twitter.setConsumerKeySecret(consumerKeySecret);
 		this.twitter.setAccessToken(accessToken);
 		this.twitter.setAccessTokenSecret(accessTokenSecret);
 	}
 	
-	public void setFacebook(String username, String password, String accessToken) {
-		this.facebook.setUsername(username);
-		this.facebook.setPassword(password);
+	public void setFacebook(String accessToken) {
 		this.facebook.setAccessToken(accessToken);
 	}
 	

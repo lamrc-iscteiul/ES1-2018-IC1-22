@@ -45,8 +45,6 @@ public class FaceAPI {
 		// fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_11);
 		 fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
 		ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
-		@SuppressWarnings("unused")
-		User me = fbClient.fetchObject(groupID, User.class);
 		Connection<Post> result = fbClient.fetchConnection(groupID,Post.class);
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
@@ -65,13 +63,13 @@ public class FaceAPI {
 		return s;
 	}
 	public void novoPost(String S){
-		GraphResponse publishMessageResponse = fbClient.publish(groupID,GraphResponse.class,Parameter.with("message", S));
+		GraphResponse novoPost = fbClient.publish(groupID,GraphResponse.class,Parameter.with("message", S));
 	}
 	
 	
 	public void comenta(Post post,String s) {
 		String destpath= "/" + post.getId() + "/comments";
-		Comment commented = fbClient.publish(destpath, Comment.class, Parameter.with("message", s));
+		Comment comment = fbClient.publish(destpath, Comment.class, Parameter.with("message", s));
 	}
 	
 	public void like (Post post){

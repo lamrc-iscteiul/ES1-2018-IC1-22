@@ -6,19 +6,15 @@
     </email>
     <facebook>
         <accessToken>EAAD5TMS5CDcBAHHR64is11KJPdzmVBR0LFzu5gLcRsBoZCmAkT6B3toUD6lG2xG3dVcdxNrveNtAYRIBHtLbgoj7jzdwkZBaebTfN7zEa0Cgkp3KPJ3BlwM7GaddSjCYadZAin2mQ6EW0nICC0s7uZBcEqaZA8WRffwJ2zi8pUgZDZD</accessToken>
-        <password>a</password>
-        <username>a</username>
     </facebook>
     <twitter>
         <accessToken>1064530381179899909-4XN1yGrzVEA0BMpGaKt7Dx2Z8vjxvR</accessToken>
         <accessTokenSecret>09SfXNvwQriWjzdJF31EkX6tKl21z3qCm3ZcVWig4UcSR</accessTokenSecret>
         <consumerKey>hDQzC3whNOWgON6e9xzwHycRF</consumerKey>
         <consumerKeySecret>bu2Kv5I9PuKNtsXVzBPKlkUssGsymhwFLuMMTbNr59eP7P5K7s</consumerKeySecret>
-        <twitterpass>a</twitterpass>
-        <username>a</username>
     </twitter>
     <filtros>
-        <chckbxBiblioteca>false</chckbxBiblioteca>
+        <chckbxBiblioteca>true</chckbxBiblioteca>
         <chckbxDias>false</chckbxDias>
         <chckbxElearning>true</chckbxElearning>
         <chckbxFenix>false</chckbxFenix>

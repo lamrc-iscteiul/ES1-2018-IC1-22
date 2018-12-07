@@ -25,14 +25,10 @@ public class Configuracoes {
 	private JFrame configFrame;
 	private static JTextField text_email_user;
 	private static JTextField text_email_pass;
-	private static JTextField text_twitter_user;
-	private static JTextField text_twitter_pass;
 	private static JTextField text_twitter_consumerkey;
 	private static JTextField text_twitter_consumersecret;
 	private static JTextField text_twitter_accesstoken;
 	private static JTextField text_twitter_accesstokensecret;
-	private static JTextField text_facebook_user;
-	private static JTextField text_facebook_pass;
 	private static JTextField text_facebook_accesstoken;
 	private configXML configXML;
 	private static Configuracoes window;
@@ -134,24 +130,10 @@ public class Configuracoes {
 		panel_1.setLayout(null);
 		tabbedPane.addTab("Twitter", null, panel_1, null);
 		
-		text_twitter_user = new JTextField();
-		text_twitter_user.setText((String) null);
-		text_twitter_user.setColumns(10);
-		text_twitter_user.setBounds(212, 21, 266, 32);
-		panel_1.add(text_twitter_user);
-		
-		JLabel label = new JLabel("Username");
-		label.setBounds(21, 24, 170, 26);
-		panel_1.add(label);
-		
-		JLabel label_1 = new JLabel("Password");
-		label_1.setBounds(21, 71, 170, 26);
-		panel_1.add(label_1);
-		
 		JButton button = new JButton("Salvar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				configXML.setTwitter(text_twitter_user.getText(), text_twitter_pass.getText(), text_twitter_consumerkey.getText(), text_twitter_consumersecret.getText(), text_twitter_accesstoken.getText(), text_twitter_accesstokensecret.getText());
+				configXML.setTwitter(text_twitter_consumerkey.getText(), text_twitter_consumersecret.getText(), text_twitter_accesstoken.getText(), text_twitter_accesstokensecret.getText());
 			try {
 				guardarXML();
 			} catch (JAXBException e1) {
@@ -167,11 +149,6 @@ public class Configuracoes {
 		JLabel label_3 = new JLabel((Icon) null);
 		label_3.setBounds(0, 0, 0, 0);
 		panel_1.add(label_3);
-		
-		text_twitter_pass = new JTextField();
-		text_twitter_pass.setColumns(10);
-		text_twitter_pass.setBounds(212, 68, 266, 32);
-		panel_1.add(text_twitter_pass);
 		
 		text_twitter_consumerkey = new JTextField();
 		text_twitter_consumerkey.setBounds(212, 121, 266, 32);
@@ -213,24 +190,10 @@ public class Configuracoes {
 		panel_2.setLayout(null);
 		tabbedPane.addTab("Facebook", null, panel_2, null);
 		
-		text_facebook_user = new JTextField();
-		text_facebook_user.setText((String) null);
-		text_facebook_user.setColumns(10);
-		text_facebook_user.setBounds(212, 21, 266, 32);
-		panel_2.add(text_facebook_user);
-		
-		JLabel label_2 = new JLabel("Username");
-		label_2.setBounds(21, 24, 170, 26);
-		panel_2.add(label_2);
-		
-		JLabel label_4 = new JLabel("Password");
-		label_4.setBounds(21, 71, 170, 26);
-		panel_2.add(label_4);
-		
 		JButton button_1 = new JButton("Salvar");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				configXML.setFacebook(text_facebook_user.getText(), text_facebook_pass.getText(), text_facebook_accesstoken.getText());
+				configXML.setFacebook(text_facebook_accesstoken.getText());
 				try {
 					guardarXML();
 				} catch (JAXBException e1) {
@@ -246,11 +209,6 @@ public class Configuracoes {
 		JLabel label_5 = new JLabel((Icon) null);
 		label_5.setBounds(0, 0, 0, 0);
 		panel_2.add(label_5);
-		
-		text_facebook_pass = new JTextField();
-		text_facebook_pass.setColumns(10);
-		text_facebook_pass.setBounds(212, 68, 266, 32);
-		panel_2.add(text_facebook_pass);
 		
 		text_facebook_accesstoken = new JTextField();
 		text_facebook_accesstoken.setColumns(10);
@@ -349,13 +307,7 @@ public class Configuracoes {
 		//email
 		text_email_user.setText(configXML.getEmail().getEmail());
 		text_email_pass.setText(configXML.getEmail().getPassword());
-		//facebook
-		text_facebook_user.setText(configXML.getFacebook().getUsername());
-		text_facebook_pass.setText(configXML.getFacebook().getPassword());
 		text_facebook_accesstoken.setText(configXML.getFacebook().getAccessToken());
-		//twitter
-		text_twitter_user.setText(configXML.getTwitter().getUsername());
-		text_twitter_pass.setText(configXML.getTwitter().getPassword());
 		text_twitter_consumerkey.setText(configXML.getTwitter().getConsumerKey());
 		text_twitter_consumersecret.setText(configXML.getTwitter().getConsumerKeySecret());
 		text_twitter_accesstoken.setText(configXML.getTwitter().getAccessToken());
