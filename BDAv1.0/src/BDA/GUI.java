@@ -696,7 +696,7 @@ public class GUI {
 
 	}
 
-	private void ordenarString() {
+	public void ordenarString() {
 		ArrayList<GeneralMessage> l = new ArrayList<GeneralMessage>();
 		int aux = model.getSize();
 		for (int i = 0; i < aux; i++) {
@@ -711,7 +711,7 @@ public class GUI {
 		}
 	}
 
-	private void ordenarDate() {
+	public void ordenarDate() {
 		ArrayList<GeneralMessage> l = new ArrayList<GeneralMessage>();
 		int aux = model.getSize();
 		for (int i = 0; i < aux; i++) {
@@ -736,7 +736,7 @@ public class GUI {
 		return lsl;
 	}
 
-	private ArrayList<GeneralMessage> applyFilters(ArrayList<GeneralMessage> list) {
+	public ArrayList<GeneralMessage> applyFilters(ArrayList<GeneralMessage> list) {
 
 		ArrayList<GeneralMessage> return_message = new ArrayList<GeneralMessage>();
 
