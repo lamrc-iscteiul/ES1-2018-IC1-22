@@ -24,7 +24,7 @@ public class FaceAPI {
 	
 	FacebookClient fbClient;
 	
-	final String groupID ="me/feed";
+	final String pageid ="me/feed";
 	
 	/**
 	 *Reads the AcessToken from the XML file, connects to the facebook page and gets the list of posts made by the page ES-2018.
@@ -47,7 +47,7 @@ public class FaceAPI {
 		String accessToken = configXML.getFacebook().getAccessToken();
 		 fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
 		ArrayList<GeneralMessage> list = new ArrayList<GeneralMessage>();
-		Connection<Post> result = fbClient.fetchConnection(groupID,Post.class);
+		Connection<Post> result = fbClient.fetchConnection(pageid,Post.class);
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
 			GeneralMessage msg = new GeneralMessage(GeneralMessage.FACEBOOK, aPost,aPost.getCreatedTime());
@@ -71,7 +71,7 @@ public class FaceAPI {
 	 *Creates a new Post in the facebook page with the string information.
 	 */
 	public void novoPost(String S){
-		GraphResponse novoPost = fbClient.publish(groupID,GraphResponse.class,Parameter.with("message", S));
+		GraphResponse novoPost = fbClient.publish(pageid,GraphResponse.class,Parameter.with("message", S));
 	}
 	
 	/**

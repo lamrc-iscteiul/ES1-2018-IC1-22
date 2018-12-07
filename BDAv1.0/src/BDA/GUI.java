@@ -39,14 +39,14 @@ public class GUI {
 
 	private JFrame frame;
 	private JTextField textField;
-	private JList<GeneralMessage> list = new JList<>();
-	private JTextArea txtrArea = new JTextArea();
-	private DefaultListModel<GeneralMessage> P = new DefaultListModel<GeneralMessage>();
+	private JList<GeneralMessage> list;
+	private JTextArea txtrArea;
+	private DefaultListModel<GeneralMessage> model;
 	private ListSelectionListener lsl;
 	private FaceAPI face;
 	private TwitterAPI tweet;
 	private EmailAPI mail;
-	private DefaultListModel<GeneralMessage> search_list = new DefaultListModel<GeneralMessage>();
+	private DefaultListModel<GeneralMessage> search_list;
 	private JButton btnRetweetar;
 	private JButton btnComentar;
 	private JButton btnResponder;
@@ -87,6 +87,11 @@ private void initialize() {
 	configXML c = Configuracoes.getConfigs();
 	System.out.println(c.getFiltros().getChckbxElearning());
 	
+	search_list = new DefaultListModel<GeneralMessage>();
+	model = new DefaultListModel<GeneralMessage>();
+	txtrArea = new JTextArea();
+	list = new JList<>();
+	
 	frame = new JFrame();
 	frame.setTitle("BDA Project");
 	frame.setBounds(100, 100, 1024, 710);
@@ -124,12 +129,12 @@ private void initialize() {
 		} else {
 			list.removeListSelectionListener(lsl);
 			txtrArea.setText(null);
-			int size= P.getSize();
+			int size= model.getSize();
 			
 			for(int i=size-1; i>=0;i--) {
-				GeneralMessage a=P.getElementAt(i);
+				GeneralMessage a=model.getElementAt(i);
 				if(a.getType()==GeneralMessage.FACEBOOK) {
-					P.removeElementAt(i);
+					model.removeElementAt(i);
 					}
 				}
 			}
@@ -146,12 +151,12 @@ private void initialize() {
 		} else {
 			list.removeListSelectionListener(lsl);
 			txtrArea.setText(null);
-			int size= P.getSize();
+			int size= model.getSize();
 			
 			for(int i=size-1; i>=0;i--) {
-				GeneralMessage a=P.getElementAt(i);
+				GeneralMessage a=model.getElementAt(i);
 				if(a.getType()==GeneralMessage.EMAIL) {
-					P.removeElementAt(i);
+					model.removeElementAt(i);
 					}
 				}
 			}
@@ -237,12 +242,12 @@ private void initialize() {
 				else {
 					list.removeListSelectionListener(lsl);
 					txtrArea.setText(null);
-					int size= P.getSize();
+					int size= model.getSize();
 					
 					for(int i=size-1; i>=0;i--) {
-						GeneralMessage a=P.getElementAt(i);
+						GeneralMessage a=model.getElementAt(i);
 						if(a.getType()==GeneralMessage.TWITTER) {
-							P.removeElementAt(i);
+							model.removeElementAt(i);
 						}
 					}
 				}
@@ -324,19 +329,16 @@ private void initialize() {
  */
 	public void pesquisar(String p){
 		if(p.isEmpty()) {
-			list.setModel(P);
+			list.setModel(model);
 		}else {
-			
-		
-		search_list.clear();
-		System.out.println(p);
-		for(Object o:P.toArray()){
+			search_list.clear();
+			System.out.println(p);
+			for(Object o:model.toArray()){
 				if(o.toString().contains(p) ){
 					search_list.addElement((GeneralMessage) o);
-					break;
 				}
-		}	
-		list.setModel(search_list);	
+			}	
+			list.setModel(search_list);	
 		}
 	}
 	
@@ -349,15 +351,14 @@ private void initialize() {
 	ArrayList<GeneralMessage> M = applyFilters(original_list);
 	
 	lsl = new ListSelectionListener() {
-//=======
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
 		
 		
-		int size= P.getSize();
+		int size= model.getSize();
 		
 		for(int i=size-1; i>=0;i--) {
-			GeneralMessage a = P.getElementAt(i);
+			GeneralMessage a = model.getElementAt(i);
 			if(list.getSelectedValue()==a) {
 				int type = a.getType();
 				switch(type) {
@@ -407,9 +408,9 @@ private void initialize() {
 	} else {
 			
 			for (GeneralMessage R : M) {
-				P.addElement(R);
+				model.addElement(R);
 			}
-			list.setModel(P);
+			list.setModel(model);
 			list.addListSelectionListener(lsl);
 	}
 }
@@ -625,33 +626,33 @@ public void responderMail(String de, String para, String ass) {
 
 private void ordenarString() {
 	ArrayList<GeneralMessage> l = new ArrayList<GeneralMessage>();
-	int aux = P.getSize();
+	int aux = model.getSize();
 	for(int i=0; i<aux;i++) {
-		GeneralMessage s = P.getElementAt(i);
+		GeneralMessage s = model.getElementAt(i);
 		l.add(s);
 	}
 	Collections.sort(l, GeneralMessage.ComparadorString);
-	P.clear();
+	model.clear();
 	for(int i=0; i<aux;i++) {
 	GeneralMessage s=l.get(i);
-	P.addElement(s);
+	model.addElement(s);
 	}
 }
 
 
 private void ordenarDate() {
 	ArrayList<GeneralMessage> l = new ArrayList<GeneralMessage>();
-	int aux = P.getSize();
+	int aux = model.getSize();
 	for(int i=0; i<aux;i++) {
-		GeneralMessage s = P.getElementAt(i);
+		GeneralMessage s = model.getElementAt(i);
 		l.add(s);
 	}
 	Collections.sort(l);
 	Collections.reverse(l);
-	P.clear();
+	model.clear();
 	for(int i=0; i<aux;i++) {
 	GeneralMessage s=l.get(i);
-	P.addElement(s);
+	model.addElement(s);
 	}
 }
 
