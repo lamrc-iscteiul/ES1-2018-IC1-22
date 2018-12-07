@@ -3,31 +3,22 @@ package BDA;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Image;
-import java.awt.List;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
-import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.xml.bind.JAXBException;
-
-import twitter4j.Status;
-
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
@@ -190,7 +181,6 @@ public class GUI {
 					responderMail(config_page.getText_email_user(), list.getSelectedValue().toString(),
 							"RE: " + list.getSelectedValue().getMessage().getSubject());
 				} catch (MessagingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -316,6 +306,7 @@ public class GUI {
 		lblCritrio.setBounds(858, 188, 92, 26);
 		frame.getContentPane().add(lblCritrio);
 
+		@SuppressWarnings("rawtypes")
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -347,7 +338,6 @@ public class GUI {
 				
 				
 			} catch (ClassNotFoundException | IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -480,7 +470,6 @@ public class GUI {
 		try {
 			guardaServicos();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -491,7 +480,6 @@ public class GUI {
 	 * @return frame
 	 */
 	public Component getFrame() {
-		// TODO Auto-generated method stub
 		return frame;
 	}
 
@@ -501,7 +489,6 @@ public class GUI {
 	 * @return JList
 	 */
 	public JList<GeneralMessage> getList() {
-		// TODO Auto-generated method stub
 		return list;
 	}
 
@@ -683,7 +670,6 @@ public class GUI {
 				try {
 					mail.enviarMail(textDe.getText(), textPara.getText(), txtRe.getText(), reply_text.getText());
 				} catch (MessagingException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				frame.dispose();
@@ -847,7 +833,6 @@ public class GUI {
 		         new FileOutputStream("file.dat");
 		         ObjectOutputStream out = new ObjectOutputStream(fileOut);
 		         ArrayList<GeneralMessage> new_list = new  ArrayList<GeneralMessage>();
-		         int size= model.getSize();
 					
 					for(GeneralMessage m : original_list) {
 						if(!(m.getType() == GeneralMessage.EMAIL))
@@ -858,6 +843,7 @@ public class GUI {
 		         fileOut.close();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void leServicos() throws IOException, ClassNotFoundException {
 		FileInputStream fileIn = new FileInputStream("file.dat");
 	    ObjectInputStream in = new ObjectInputStream(fileIn);
